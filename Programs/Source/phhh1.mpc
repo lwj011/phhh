@@ -1,0 +1,34 @@
+program.use_edabit(True)
+#program.use_split(3)
+from Compiler import types,library, instructions
+from Compiler.types import Array, sint, cint
+from Compiler.phhh1 import phhh_1, phhh_2, phhh_0, generate_zipf_distribution
+from Compiler.GC.types import sbitvec
+from Compiler.instructions import time, crash
+from  Compiler.sorting import radix_sort
+
+#this is the test file of private hierarchical heavy hittters, including basicHHH, PHHH-1, PHHH-2.
+
+
+
+n_bits = 64
+num = 10
+t = sint(100)
+zipf_data = generate_zipf_distribution(n_bits, num, 1.03)
+a = sint.Array(num)
+a.assign(zipf_data)
+print_ln('the input data is:')
+a.print_reveal_nested(end='\n')
+radix_sort(a,a,n_bits,signed=False)
+#phhh_0(a,n_bits,t)
+phhh_1(a,n_bits,t)
+phhh_2(a, n_bits, t)
+print_ln('----- testing end -----')
+
+
+
+
+
+
+
+

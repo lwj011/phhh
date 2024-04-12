@@ -1,0 +1,98 @@
+Using security parameter 40
+Trying to run 64-bit computation
+-------------------------basic testing starts------------------------------------
+the input data is:
+[6, 1, 5, 4, 7, 7, 7, 0, 5, 2, 4, 4, 5, 0, 2, 4, 6]
+Starting timer 30 at 0 (0 MB, 0 rounds) after 7.056e-06
+Starting timer 301 at 0 (0 MB, 0 rounds) after 1.73e-06
+Stopped timer 301 at 0.0118215 (0.088698 MB, 103 rounds)
+Starting timer 302 at 0 (0 MB, 0 rounds) after 1.99e-06
+Stopped timer 302 at 0.0469559 (0.245636 MB, 531 rounds)
+Starting timer 303 at 0 (0 MB, 0 rounds) after 2.743e-06
+Stopped timer 303 at 0.000732277 (0.000178 MB, 5 rounds)
+Starting timer 302 at 0.0469559 (0.245636 MB, 531 rounds) after 0.000816223
+Stopped timer 302 at 0.0753214 (0.252056 MB, 849 rounds)
+Starting timer 303 at 0.000732277 (0.000178 MB, 5 rounds) after 0.0284465
+Stopped timer 303 at 0.00121926 (0.000356 MB, 10 rounds)
+Starting timer 302 at 0.0753214 (0.252056 MB, 849 rounds) after 0.000555838
+Stopped timer 302 at 0.0992254 (0.257388 MB, 1151 rounds)
+Starting timer 303 at 0.00121926 (0.000356 MB, 10 rounds) after 0.0239672
+Stopped timer 303 at 0.00175261 (0.000534 MB, 15 rounds)
+Starting timer 303 at 0.00175261 (0.000534 MB, 15 rounds) after 3.1651e-05
+Stopped timer 303 at 0.956368 (0.290865 MB, 11917 rounds)
+[0, 0, 2]; [1, 0, 0]; [1, 0, 1]; [1, 1, 1]; Stopped timer 30 at 1.07279 (0.637455 MB, 13226 rounds)
+Starting timer 10 at 0 (0 MB, 0 rounds) after 2.286e-06
+Starting timer 101 at 0 (0 MB, 0 rounds) after 1.8e-06
+Stopped timer 101 at 0.00558947 (0.005978 MB, 85 rounds)
+Starting timer 102 at 0 (0 MB, 0 rounds) after 6.544e-06
+Stopped timer 102 at 0.00189836 (0.001024 MB, 20 rounds)
+Starting timer 103 at 0 (0 MB, 0 rounds) after 2.711e-06
+Stopped timer 103 at 0.0134567 (0.000817 MB, 152 rounds)
+Starting timer 104 at 0 (0 MB, 0 rounds) after 2.642e-06
+Stopped timer 104 at 0.00295407 (0.000544 MB, 34 rounds)
+Starting timer 103 at 0.0134567 (0.000817 MB, 152 rounds) after 0.00301781
+Stopped timer 103 at 0.0255319 (0.001634 MB, 304 rounds)
+Starting timer 104 at 0.00295407 (0.000544 MB, 34 rounds) after 0.0121466
+Stopped timer 104 at 0.00586357 (0.001088 MB, 68 rounds)
+Starting timer 103 at 0.0255319 (0.001634 MB, 304 rounds) after 0.00298761
+Stopped timer 103 at 0.0377028 (0.002451 MB, 456 rounds)
+Starting timer 104 at 0.00586357 (0.001088 MB, 68 rounds) after 0.0122472
+Stopped timer 104 at 0.00956867 (0.001632 MB, 102 rounds)
+[0, 0, 2]; [1, 0, 0]; [1, 0, 1]; [1, 1, 1]; Stopped timer 10 at 0.0613137 (0.011767 MB, 723 rounds)
+Starting timer 20 at 0 (0 MB, 0 rounds) after 2.7e-06
+Starting timer 201 at 0 (0 MB, 0 rounds) after 1.772e-06
+Stopped timer 201 at 0.00620952 (0.005978 MB, 85 rounds)
+Starting timer 202 at 0 (0 MB, 0 rounds) after 2.806e-06
+Stopped timer 202 at 0.00467593 (0.003006 MB, 51 rounds)
+Starting timer 203 at 0 (0 MB, 0 rounds) after 6.187e-06
+Stopped timer 203 at 0.00939678 (0.001308 MB, 114 rounds)
+Starting timer 204 at 0 (0 MB, 0 rounds) after 1.814e-06
+[1, 0, 0];[1, 0, 1];[1, 1, 1];[0, 0, 2];Stopped timer 204 at 0.00332582 (0.00026 MB, 40 rounds)
+Stopped timer 20 at 0.0254456 (0.01081 MB, 305 rounds)
+-----basic testing end, 3 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----
+-------------------------big layers testing starts------------------------------------
+the input data is:
+[60000, 12345, 50001, 41011, 71, 71, 71, 0, 50001, 27777, 41011, 41011, 50001, 0, 27777, 41011, 60000]
+-----layers testing end, 16 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----
+Compiler: ./compile.py -I -R 64 phhh2.mpc
+	7802 dabits of replicated Z2^64 left
+Significant amount of unused dabits of replicated Z2^64 distorting the benchmark. For more accurate benchmarks, consider reducing the batch size with --batch-size.
+	~8576 loose edaBits of size 63 left
+Significant amount of unused edaBits of size 63. For more accurate benchmarks, consider reducing the batch size with --batch-size.
+	~9920 loose edaBits of size 64 left
+Significant amount of unused edaBits of size 64. For more accurate benchmarks, consider reducing the batch size with --batch-size.
+Spent 1.13726 seconds (0.097728 MB, 14099 rounds) on the online phase and 0.0239273 seconds (0.562576 MB, 157 rounds) on the preprocessing/offline phase.
+Communication details (rounds in parallel threads counted double):
+Passing around 0.327688 MB in 13966 rounds, taking 1.08769 seconds
+Receiving directly 0.010192 MB in 142 rounds, taking 0.0109461 seconds
+Sending directly 0.332616 MB in 148 rounds, taking 0.00826298 seconds
+CPU time = 1.17234
+The following benchmarks are including preprocessing (offline phase).
+Time = 1.16216 seconds 
+Time10 = 0.0613137 seconds (0.011767 MB, 723 rounds)
+Time20 = 0.0254456 seconds (0.01081 MB, 305 rounds)
+Time30 = 1.07279 seconds (0.637455 MB, 13226 rounds)
+Time101 = 0.00558947 seconds (0.005978 MB, 85 rounds)
+Time102 = 0.00189836 seconds (0.001024 MB, 20 rounds)
+Time103 = 0.0377028 seconds (0.002451 MB, 456 rounds)
+Time104 = 0.00956867 seconds (0.001632 MB, 102 rounds)
+Time201 = 0.00620952 seconds (0.005978 MB, 85 rounds)
+Time202 = 0.00467593 seconds (0.003006 MB, 51 rounds)
+Time203 = 0.00939678 seconds (0.001308 MB, 114 rounds)
+Time204 = 0.00332582 seconds (0.00026 MB, 40 rounds)
+Time301 = 0.0118215 seconds (0.088698 MB, 103 rounds)
+Time302 = 0.0992254 seconds (0.257388 MB, 1151 rounds)
+Time303 = 0.956368 seconds (0.290865 MB, 11917 rounds)
+Data sent = 0.660304 MB in ~14256 rounds (party 1 only)
+Global data sent = 1.65849 MB (all parties)
+Actual cost of program:
+  Type int
+          2246         daBits
+  edaBits
+           232 of length 3
+          1432 of length 63
+           118 of length 64
+This program might benefit from some protocol options.
+Consider adding the following at the beginning of your code:
+	program.use_split(3)
+Command line: ./replicated-ring-party.x -I -p 1 -v phhh2

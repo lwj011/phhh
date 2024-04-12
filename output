@@ -1,0 +1,19 @@
+Default bit length for compilation: 63
+Default security parameter for compilation: 40
+Compiling file Programs/Source/phhh2.mpc
+WARNING: Order of memory instructions not preserved, errors possible
+Writing to Programs/Schedules/phhh2.sch
+Writing to Programs/Bytecode/phhh2-0.bc
+Hash: 0926b4f676ab672edb72fb7d8064f01541cfbf75a49c53b8ddd6b9ac87830cb8
+Program requires at most:
+         inf integer opens
+         232 loose edabits of length 3
+         inf bit triples
+         inf integer dabits
+         inf bit inverses
+        4257 integer inputs from player 0
+        4257 integer inputs from player 1
+         inf integer triples
+         inf loose edabits of length 63
+         inf loose edabits of length 64
+         inf virtual machine rounds

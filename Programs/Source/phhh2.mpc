@@ -1,0 +1,42 @@
+program.use_edabit(True)
+#program.use_split(3)
+from Compiler import types,library, instructions
+from Compiler.types import Array, sint, cint
+from Compiler.phhh1 import radix_sort, phhh_1, phhh_2, phhh_0, generate_zipf_distribution
+from Compiler.GC.types import sbitvec
+from Compiler.instructions import time, crash
+#from  Compiler.sorting import radix_sort
+
+#this is the test file of private hierarchical heavy hittters, including basicHHH, PHHH-1, PHHH-2.
+
+
+
+print_ln('-------------------------basic testing starts------------------------------------')
+#t is 3
+a = sint.Array(17)
+a.assign([6,1,5,4,7,7,7,0,5,2,4,4,5,0,2,4,6])
+t = sint(3)
+print_ln('the input data is:')
+a.print_reveal_nested(end='\n')
+phhh_0(a,3,t)
+phhh_1(a,3,t)
+phhh_2(a,3,t)
+print_ln('-----basic testing end, 3 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----')
+
+
+
+
+
+
+print_ln('-------------------------big layers testing starts------------------------------------')
+#t is 3
+a = sint.Array(17)
+a.assign([60000,12345,50001,41011,71,71,71,0,50001,27777,41011,41011,50001,0,27777,41011,60000])
+t = sint(3)
+print_ln('the input data is:')
+a.print_reveal_nested(end='\n')
+#phhh_0(a,16,t)
+#phhh_1(a,16,t)
+#phhh_2(a,16,t)
+print_ln('-----layers testing end, 16 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----')
+
