@@ -508,7 +508,7 @@ def phhh_0(k0,n_bits=16, t=1):
         @library.for_range_opt(len(k))
         def _(j):
             fres_t[i][j] = fres[i][j].greater_equal(t)
-            fres[i][j] = fres[i][j] * fres_t[i][j]
+            fres[i][j] = fres[i][j] * fres_t[i][j]  #not necessary
             @library.for_range(i+1)
             def _(s):
                 hdata[i][j][s] = fres_t[i][j].if_else(hdata[i][j][s], sint(2))
