@@ -4,16 +4,15 @@ Compiling file Programs/Source/phhh2.mpc
 WARNING: Order of memory instructions not preserved, errors possible
 Writing to Programs/Schedules/phhh2.sch
 Writing to Programs/Bytecode/phhh2-0.bc
-Hash: 0926b4f676ab672edb72fb7d8064f01541cfbf75a49c53b8ddd6b9ac87830cb8
+Hash: 060bfe6f9ee4f028d673af5b27d35c30f1e88e9d1d39c318a1c05a71862eafec
 Program requires at most:
-         inf integer opens
-         232 loose edabits of length 3
-         inf bit triples
-         inf integer dabits
+         442 integer opens
+          34 loose edabits of length 3
+        6222 bit triples
+         153 integer dabits
          inf bit inverses
-        4257 integer inputs from player 0
-        4257 integer inputs from player 1
-         inf integer triples
-         inf loose edabits of length 63
-         inf loose edabits of length 64
+         903 integer inputs from player 0
+         903 integer inputs from player 1
+        9560 integer triples
+          51 loose edabits of length 64
          inf virtual machine rounds

@@ -263,13 +263,13 @@ def phhh_1(k0,n_bits=16, t=1):
     
     
     # hdata.print_reveal_nested(end='\n')  #the true output without leaking
-    # @library.for_range_opt(len(hdata))   #the output for observing
-    # def _(i):
-    #     @library.for_range_opt(len(hdata[i]))
-    #     def _(j):
-    #         @library.if_(fres_t[i][j].reveal())
-    #         def _():
-    #             hdata[i][j].print_reveal_nested(end='; ')
+    @library.for_range_opt(len(hdata))   #the output for observing, can be #
+    def _(i):
+        @library.for_range_opt(len(hdata[i]))
+        def _(j):
+            @library.if_(fres_t[i][j].reveal())
+            def _():
+                hdata[i][j].print_reveal_nested(end='; ')
     stop_timer(10)
 
 

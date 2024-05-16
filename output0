@@ -1,52 +1,32 @@
 -------------------------basic testing starts------------------------------------
 the input data is:
 [6, 1, 5, 4, 7, 7, 7, 0, 5, 2, 4, 4, 5, 0, 2, 4, 6]
-Starting timer 30 at 0 (0 MB, 0 rounds) after 5.567e-06
-Starting timer 301 at 0 (0 MB, 0 rounds) after 1.651e-06
-Stopped timer 301 at 0.0117046 (0.088698 MB, 104 rounds)
-Starting timer 302 at 0 (0 MB, 0 rounds) after 2.47e-06
-Stopped timer 302 at 0.0471863 (0.245636 MB, 531 rounds)
-Starting timer 303 at 0 (0 MB, 0 rounds) after 3.636e-06
-Stopped timer 303 at 0.000557232 (0.000178 MB, 5 rounds)
-Starting timer 302 at 0.0471863 (0.245636 MB, 531 rounds) after 0.000631995
-Stopped timer 302 at 0.0755246 (0.252056 MB, 849 rounds)
-Starting timer 303 at 0.000557232 (0.000178 MB, 5 rounds) after 0.0284074
-Stopped timer 303 at 0.00103274 (0.000356 MB, 10 rounds)
-Starting timer 302 at 0.0755246 (0.252056 MB, 849 rounds) after 0.000557097
-Stopped timer 302 at 0.0994477 (0.257388 MB, 1151 rounds)
-Starting timer 303 at 0.00103274 (0.000356 MB, 10 rounds) after 0.0240042
-Stopped timer 303 at 0.00152747 (0.000534 MB, 15 rounds)
-Starting timer 303 at 0.00152747 (0.000534 MB, 15 rounds) after 2.8611e-05
-Stopped timer 303 at 0.956216 (0.290865 MB, 11917 rounds)
-[0, 0, 2]; [1, 0, 0]; [1, 0, 1]; [1, 1, 1]; Stopped timer 30 at 1.07273 (0.637455 MB, 13227 rounds)
-Starting timer 10 at 0 (0 MB, 0 rounds) after 2.497e-06
-Starting timer 101 at 0 (0 MB, 0 rounds) after 1.664e-06
-Stopped timer 101 at 0.00562424 (0.005978 MB, 85 rounds)
-Starting timer 102 at 0 (0 MB, 0 rounds) after 4.252e-06
-Stopped timer 102 at 0.0017767 (0.001024 MB, 20 rounds)
-Starting timer 103 at 0 (0 MB, 0 rounds) after 2.707e-06
-Stopped timer 103 at 0.0134487 (0.000817 MB, 152 rounds)
-Starting timer 104 at 0 (0 MB, 0 rounds) after 2.597e-06
-Stopped timer 104 at 0.00297812 (0.000544 MB, 34 rounds)
-Starting timer 103 at 0.0134487 (0.000817 MB, 152 rounds) after 0.00305572
-Stopped timer 103 at 0.0255561 (0.001634 MB, 304 rounds)
-Starting timer 104 at 0.00297812 (0.000544 MB, 34 rounds) after 0.0122051
-Stopped timer 104 at 0.00585369 (0.001088 MB, 68 rounds)
-Starting timer 103 at 0.0255561 (0.001634 MB, 304 rounds) after 0.00297075
-Stopped timer 103 at 0.0379076 (0.002451 MB, 456 rounds)
-Starting timer 104 at 0.00585369 (0.001088 MB, 68 rounds) after 0.0124678
-Stopped timer 104 at 0.00930759 (0.001632 MB, 102 rounds)
-[0, 0, 2]; [1, 0, 0]; [1, 0, 1]; [1, 1, 1]; Stopped timer 10 at 0.0613241 (0.011767 MB, 723 rounds)
-Starting timer 20 at 0 (0 MB, 0 rounds) after 4.804e-06
-Starting timer 201 at 0 (0 MB, 0 rounds) after 3.509e-06
-Stopped timer 201 at 0.0062101 (0.005978 MB, 85 rounds)
-Starting timer 202 at 0 (0 MB, 0 rounds) after 5.032e-06
-Stopped timer 202 at 0.00467133 (0.003006 MB, 51 rounds)
-Starting timer 203 at 0 (0 MB, 0 rounds) after 4.007e-06
-Stopped timer 203 at 0.00940458 (0.001308 MB, 114 rounds)
-Starting timer 204 at 0 (0 MB, 0 rounds) after 2.079e-06
-[1, 0, 0];[1, 0, 1];[1, 1, 1];[0, 0, 2];Stopped timer 204 at 0.00317484 (0.00026 MB, 40 rounds)
-Stopped timer 20 at 0.0253309 (0.01081 MB, 305 rounds)
+Starting timer 10 at 0 (0 MB, 0 rounds) after 1.1099e-05
+Starting timer 101 at 0 (0 MB, 0 rounds) after 2.821e-06
+Stopped timer 101 at 0.408308 (0.00817 MB, 104 rounds)
+Starting timer 102 at 0 (0 MB, 0 rounds) after 1.0758e-05
+Stopped timer 102 at 0.0477079 (0.001024 MB, 8 rounds)
+Starting timer 103 at 0 (0 MB, 0 rounds) after 3.457e-06
+Starting timer 104 at 0 (0 MB, 0 rounds) after 2.158e-06
+Stopped timer 104 at 0.079531 (0.000128 MB, 16 rounds)
+Starting timer 105 at 0 (0 MB, 0 rounds) after 3.38e-06
+Stopped timer 105 at 0.409559 (0.002194 MB, 79 rounds)
+Starting timer 106 at 0 (0 MB, 0 rounds) after 5.118e-06
+Stopped timer 106 at 0.180328 (0.000544 MB, 34 rounds)
+Starting timer 104 at 0.079531 (0.000128 MB, 16 rounds) after 0.590127
+Stopped timer 104 at 0.170551 (0.000256 MB, 32 rounds)
+Starting timer 105 at 0.409559 (0.002194 MB, 79 rounds) after 0.271613
+Stopped timer 105 at 0.452514 (0.00282 MB, 88 rounds)
+Starting timer 106 at 0.180328 (0.000544 MB, 34 rounds) after 0.134235
+Stopped timer 106 at 0.368017 (0.001088 MB, 68 rounds)
+Starting timer 104 at 0.170551 (0.000256 MB, 32 rounds) after 0.230885
+Stopped timer 104 at 0.251634 (0.000384 MB, 48 rounds)
+Starting timer 105 at 0.452514 (0.00282 MB, 88 rounds) after 0.269016
+Stopped timer 105 at 0.506555 (0.003446 MB, 97 rounds)
+Starting timer 106 at 0.368017 (0.001088 MB, 68 rounds) after 0.135349
+Stopped timer 106 at 0.545343 (0.001632 MB, 102 rounds)
+Stopped timer 103 at 1.30426 (0.005462 MB, 247 rounds)
+[0, 0, 2]; [1, 0, 0]; [1, 0, 1]; [1, 1, 1]; Stopped timer 10 at 2.08278 (0.015338 MB, 419 rounds)
 -----basic testing end, 3 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----
 -------------------------big layers testing starts------------------------------------
 the input data is:
