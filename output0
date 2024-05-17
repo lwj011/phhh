@@ -1,34 +1,651 @@
--------------------------basic testing starts------------------------------------
-the input data is:
-[6, 1, 5, 4, 7, 7, 7, 0, 5, 2, 4, 4, 5, 0, 2, 4, 6]
-Starting timer 10 at 0 (0 MB, 0 rounds) after 1.1099e-05
-Starting timer 101 at 0 (0 MB, 0 rounds) after 2.821e-06
-Stopped timer 101 at 0.408308 (0.00817 MB, 104 rounds)
-Starting timer 102 at 0 (0 MB, 0 rounds) after 1.0758e-05
-Stopped timer 102 at 0.0477079 (0.001024 MB, 8 rounds)
-Starting timer 103 at 0 (0 MB, 0 rounds) after 3.457e-06
-Starting timer 104 at 0 (0 MB, 0 rounds) after 2.158e-06
-Stopped timer 104 at 0.079531 (0.000128 MB, 16 rounds)
-Starting timer 105 at 0 (0 MB, 0 rounds) after 3.38e-06
-Stopped timer 105 at 0.409559 (0.002194 MB, 79 rounds)
-Starting timer 106 at 0 (0 MB, 0 rounds) after 5.118e-06
-Stopped timer 106 at 0.180328 (0.000544 MB, 34 rounds)
-Starting timer 104 at 0.079531 (0.000128 MB, 16 rounds) after 0.590127
-Stopped timer 104 at 0.170551 (0.000256 MB, 32 rounds)
-Starting timer 105 at 0.409559 (0.002194 MB, 79 rounds) after 0.271613
-Stopped timer 105 at 0.452514 (0.00282 MB, 88 rounds)
-Starting timer 106 at 0.180328 (0.000544 MB, 34 rounds) after 0.134235
-Stopped timer 106 at 0.368017 (0.001088 MB, 68 rounds)
-Starting timer 104 at 0.170551 (0.000256 MB, 32 rounds) after 0.230885
-Stopped timer 104 at 0.251634 (0.000384 MB, 48 rounds)
-Starting timer 105 at 0.452514 (0.00282 MB, 88 rounds) after 0.269016
-Stopped timer 105 at 0.506555 (0.003446 MB, 97 rounds)
-Starting timer 106 at 0.368017 (0.001088 MB, 68 rounds) after 0.135349
-Stopped timer 106 at 0.545343 (0.001632 MB, 102 rounds)
-Stopped timer 103 at 1.30426 (0.005462 MB, 247 rounds)
-[0, 0, 2]; [1, 0, 0]; [1, 0, 1]; [1, 1, 1]; Stopped timer 10 at 2.08278 (0.015338 MB, 419 rounds)
------basic testing end, 3 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----
--------------------------big layers testing starts------------------------------------
-the input data is:
-[60000, 12345, 50001, 41011, 71, 71, 71, 0, 50001, 27777, 41011, 41011, 50001, 0, 27777, 41011, 60000]
------layers testing end, 16 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----
+Starting timer 10 at 0 (0 MB, 0 rounds) after 7.879e-06
+Starting timer 101 at 0 (0 MB, 0 rounds) after 3.485e-06
+Stopped timer 101 at 9.40271 (70.1633 MB, 1495 rounds)
+Starting timer 102 at 0 (0 MB, 0 rounds) after 9.255e-06
+Stopped timer 102 at 0.795387 (10.159 MB, 127 rounds)
+Starting timer 103 at 0 (0 MB, 0 rounds) after 3.19e-06
+Starting timer 104 at 0 (0 MB, 0 rounds) after 1.904e-06
+Starting timer 107 at 0 (0 MB, 0 rounds) after 5.796e-06
+Stopped timer 107 at 0.00577972 (0.16 MB, 1 rounds)
+Starting timer 109 at 0 (0 MB, 0 rounds) after 2.665e-06
+Stopped timer 109 at 0.105107 (0.800064 MB, 22 rounds)
+Starting timer 108 at 0 (0 MB, 0 rounds) after 5.075e-06
+Stopped timer 108 at 0.0207849 (0.319968 MB, 2 rounds)
+Stopped timer 104 at 0.207751 (1.68006 MB, 36 rounds)
+Starting timer 105 at 0 (0 MB, 0 rounds) after 4.135e-06
+Stopped timer 105 at 0.0493334 (0.303756 MB, 8 rounds)
+Starting timer 104 at 0.207751 (1.68006 MB, 36 rounds) after 0.0579254
+Starting timer 107 at 0.00577972 (0.16 MB, 1 rounds) after 0.259708
+Stopped timer 107 at 0.00913596 (0.32 MB, 2 rounds)
+Starting timer 109 at 0.105107 (0.800064 MB, 22 rounds) after 0.157981
+Stopped timer 109 at 0.215687 (1.60013 MB, 44 rounds)
+Starting timer 108 at 0.0207849 (0.319968 MB, 2 rounds) after 0.247748
+Stopped timer 108 at 0.0421559 (0.639936 MB, 4 rounds)
+Stopped timer 104 at 0.418721 (3.36013 MB, 72 rounds)
+Starting timer 105 at 0.0493334 (0.303756 MB, 8 rounds) after 0.219599
+Stopped timer 105 at 0.098996 (0.607512 MB, 16 rounds)
+Starting timer 104 at 0.418721 (3.36013 MB, 72 rounds) after 0.0593794
+Starting timer 107 at 0.00913596 (0.32 MB, 2 rounds) after 0.266098
+Stopped timer 107 at 0.0163422 (0.48 MB, 3 rounds)
+Starting timer 109 at 0.215687 (1.60013 MB, 44 rounds) after 0.162734
+Stopped timer 109 at 0.32338 (2.40019 MB, 66 rounds)
+Starting timer 108 at 0.0421559 (0.639936 MB, 4 rounds) after 0.249082
+Stopped timer 108 at 0.0638343 (0.959904 MB, 6 rounds)
+Stopped timer 104 at 0.62985 (5.04019 MB, 108 rounds)
+Starting timer 105 at 0.098996 (0.607512 MB, 16 rounds) after 0.220866
+Stopped timer 105 at 0.146946 (0.911268 MB, 24 rounds)
+Starting timer 104 at 0.62985 (5.04019 MB, 108 rounds) after 0.0591697
+Starting timer 107 at 0.0163422 (0.48 MB, 3 rounds) after 0.28276
+Stopped timer 107 at 0.0207662 (0.64 MB, 4 rounds)
+Starting timer 109 at 0.32338 (2.40019 MB, 66 rounds) after 0.179509
+Stopped timer 109 at 0.430203 (3.20026 MB, 88 rounds)
+Starting timer 108 at 0.0638343 (0.959904 MB, 6 rounds) after 0.26465
+Stopped timer 108 at 0.0848827 (1.27987 MB, 8 rounds)
+Stopped timer 104 at 0.856991 (6.72026 MB, 144 rounds)
+Starting timer 105 at 0.146946 (0.911268 MB, 24 rounds) after 0.238394
+Stopped timer 105 at 0.197427 (1.21502 MB, 32 rounds)
+Starting timer 104 at 0.856991 (6.72026 MB, 144 rounds) after 0.0591778
+Starting timer 107 at 0.0207662 (0.64 MB, 4 rounds) after 0.263678
+Stopped timer 107 at 0.023616 (0.8 MB, 5 rounds)
+Starting timer 109 at 0.430203 (3.20026 MB, 88 rounds) after 0.159722
+Stopped timer 109 at 0.544651 (4.00032 MB, 110 rounds)
+Starting timer 108 at 0.0848827 (1.27987 MB, 8 rounds) after 0.253085
+Stopped timer 108 at 0.10576 (1.59984 MB, 10 rounds)
+Stopped timer 104 at 1.07154 (8.40032 MB, 180 rounds)
+Starting timer 105 at 0.197427 (1.21502 MB, 32 rounds) after 0.223276
+Stopped timer 105 at 0.245647 (1.51878 MB, 40 rounds)
+Starting timer 104 at 1.07154 (8.40032 MB, 180 rounds) after 0.0598595
+Starting timer 107 at 0.023616 (0.8 MB, 5 rounds) after 0.271989
+Stopped timer 107 at 0.0273463 (0.96 MB, 6 rounds)
+Starting timer 109 at 0.544651 (4.00032 MB, 110 rounds) after 0.161288
+Stopped timer 109 at 0.652342 (4.80038 MB, 132 rounds)
+Starting timer 108 at 0.10576 (1.59984 MB, 10 rounds) after 0.248098
+Stopped timer 108 at 0.127764 (1.91981 MB, 12 rounds)
+Stopped timer 104 at 1.28155 (10.0804 MB, 216 rounds)
+Starting timer 105 at 0.245647 (1.51878 MB, 40 rounds) after 0.221665
+Stopped timer 105 at 0.29525 (1.82254 MB, 48 rounds)
+Starting timer 104 at 1.28155 (10.0804 MB, 216 rounds) after 0.0577917
+Starting timer 107 at 0.0273463 (0.96 MB, 6 rounds) after 0.263281
+Stopped timer 107 at 0.0286194 (1.12 MB, 7 rounds)
+Starting timer 109 at 0.652342 (4.80038 MB, 132 rounds) after 0.156887
+Stopped timer 109 at 0.765784 (5.60045 MB, 154 rounds)
+Starting timer 108 at 0.127764 (1.91981 MB, 12 rounds) after 0.248326
+Stopped timer 108 at 0.149785 (2.23978 MB, 14 rounds)
+Stopped timer 104 at 1.49401 (11.7604 MB, 252 rounds)
+Starting timer 105 at 0.29525 (1.82254 MB, 48 rounds) after 0.22069
+Stopped timer 105 at 0.345325 (2.12629 MB, 56 rounds)
+Starting timer 104 at 1.49401 (11.7604 MB, 252 rounds) after 0.0591714
+Starting timer 107 at 0.0286194 (1.12 MB, 7 rounds) after 0.270815
+Stopped timer 107 at 0.029772 (1.28 MB, 8 rounds)
+Starting timer 109 at 0.765784 (5.60045 MB, 154 rounds) after 0.158538
+Stopped timer 109 at 0.878299 (6.40051 MB, 176 rounds)
+Starting timer 108 at 0.149785 (2.23978 MB, 14 rounds) after 0.24903
+Stopped timer 108 at 0.170966 (2.55974 MB, 16 rounds)
+Stopped timer 104 at 1.70464 (13.4405 MB, 288 rounds)
+Starting timer 105 at 0.345325 (2.12629 MB, 56 rounds) after 0.219765
+Stopped timer 105 at 0.394728 (2.43005 MB, 64 rounds)
+Starting timer 104 at 1.70464 (13.4405 MB, 288 rounds) after 0.0585712
+Starting timer 107 at 0.029772 (1.28 MB, 8 rounds) after 0.266051
+Stopped timer 107 at 0.0375441 (1.44 MB, 9 rounds)
+Starting timer 109 at 0.878299 (6.40051 MB, 176 rounds) after 0.161365
+Stopped timer 109 at 0.985227 (7.20058 MB, 198 rounds)
+Starting timer 108 at 0.170966 (2.55974 MB, 16 rounds) after 0.247104
+Stopped timer 108 at 0.192142 (2.87971 MB, 18 rounds)
+Stopped timer 104 at 1.91483 (15.1206 MB, 324 rounds)
+Starting timer 105 at 0.394728 (2.43005 MB, 64 rounds) after 0.219373
+Stopped timer 105 at 0.444264 (2.7338 MB, 72 rounds)
+Starting timer 104 at 1.91483 (15.1206 MB, 324 rounds) after 0.058592
+Starting timer 107 at 0.0375441 (1.44 MB, 9 rounds) after 0.260946
+Stopped timer 107 at 0.041903 (1.6 MB, 10 rounds)
+Starting timer 109 at 0.985227 (7.20058 MB, 198 rounds) after 0.158363
+Stopped timer 109 at 1.09791 (8.00064 MB, 220 rounds)
+Starting timer 108 at 0.192142 (2.87971 MB, 18 rounds) after 0.249883
+Stopped timer 108 at 0.213204 (3.19968 MB, 20 rounds)
+Stopped timer 104 at 2.12627 (16.8006 MB, 360 rounds)
+Starting timer 105 at 0.444264 (2.7338 MB, 72 rounds) after 0.220504
+Stopped timer 105 at 0.492034 (3.03756 MB, 80 rounds)
+Starting timer 104 at 2.12627 (16.8006 MB, 360 rounds) after 0.0592512
+Starting timer 107 at 0.041903 (1.6 MB, 10 rounds) after 0.268504
+Stopped timer 107 at 0.0458498 (1.76 MB, 11 rounds)
+Starting timer 109 at 1.09791 (8.00064 MB, 220 rounds) after 0.159785
+Stopped timer 109 at 1.20462 (8.8007 MB, 242 rounds)
+Starting timer 108 at 0.213204 (3.19968 MB, 20 rounds) after 0.245415
+Stopped timer 108 at 0.234314 (3.51965 MB, 22 rounds)
+Stopped timer 104 at 2.33485 (18.4807 MB, 396 rounds)
+Starting timer 105 at 0.492034 (3.03756 MB, 80 rounds) after 0.220094
+Stopped timer 105 at 0.542218 (3.34132 MB, 88 rounds)
+Starting timer 104 at 2.33485 (18.4807 MB, 396 rounds) after 0.0593491
+Starting timer 107 at 0.0458498 (1.76 MB, 11 rounds) after 0.262031
+Stopped timer 107 at 0.048573 (1.92 MB, 12 rounds)
+Starting timer 109 at 1.20462 (8.8007 MB, 242 rounds) after 0.15807
+Stopped timer 109 at 1.31932 (9.60077 MB, 264 rounds)
+Starting timer 108 at 0.234314 (3.51965 MB, 22 rounds) after 0.251653
+Stopped timer 108 at 0.255676 (3.83962 MB, 24 rounds)
+Stopped timer 104 at 2.54844 (20.1608 MB, 432 rounds)
+Starting timer 105 at 0.542218 (3.34132 MB, 88 rounds) after 0.222785
+Stopped timer 105 at 0.590291 (3.64507 MB, 96 rounds)
+Starting timer 104 at 2.54844 (20.1608 MB, 432 rounds) after 0.0596181
+Starting timer 107 at 0.048573 (1.92 MB, 12 rounds) after 0.274322
+Stopped timer 107 at 0.0502681 (2.08 MB, 13 rounds)
+Starting timer 109 at 1.31932 (9.60077 MB, 264 rounds) after 0.161324
+Stopped timer 109 at 1.4299 (10.4008 MB, 286 rounds)
+Starting timer 108 at 0.255676 (3.83962 MB, 24 rounds) after 0.250536
+Stopped timer 108 at 0.277972 (4.15958 MB, 26 rounds)
+Stopped timer 104 at 2.76118 (21.8408 MB, 468 rounds)
+Starting timer 105 at 0.590291 (3.64507 MB, 96 rounds) after 0.224313
+Stopped timer 105 at 0.639505 (3.94883 MB, 104 rounds)
+Starting timer 104 at 2.76118 (21.8408 MB, 468 rounds) after 0.0587308
+Starting timer 107 at 0.0502681 (2.08 MB, 13 rounds) after 0.268689
+Stopped timer 107 at 0.0542944 (2.24 MB, 14 rounds)
+Starting timer 109 at 1.4299 (10.4008 MB, 286 rounds) after 0.162188
+Stopped timer 109 at 1.53699 (11.2009 MB, 308 rounds)
+Starting timer 108 at 0.277972 (4.15958 MB, 26 rounds) after 0.246979
+Stopped timer 108 at 0.299379 (4.47955 MB, 28 rounds)
+Stopped timer 104 at 2.97185 (23.5209 MB, 504 rounds)
+Starting timer 105 at 0.639505 (3.94883 MB, 104 rounds) after 0.220189
+Stopped timer 105 at 0.688101 (4.25258 MB, 112 rounds)
+Starting timer 104 at 2.97185 (23.5209 MB, 504 rounds) after 0.0603399
+Starting timer 107 at 0.0542944 (2.24 MB, 14 rounds) after 0.266358
+Stopped timer 107 at 0.0571009 (2.4 MB, 15 rounds)
+Starting timer 109 at 1.53699 (11.2009 MB, 308 rounds) after 0.16206
+Stopped timer 109 at 1.64546 (12.001 MB, 330 rounds)
+Starting timer 108 at 0.299379 (4.47955 MB, 28 rounds) after 0.249136
+Stopped timer 108 at 0.320115 (4.79952 MB, 30 rounds)
+Stopped timer 104 at 3.17955 (25.201 MB, 540 rounds)
+Starting timer 105 at 0.688101 (4.25258 MB, 112 rounds) after 0.219476
+Stopped timer 105 at 0.736286 (4.55634 MB, 120 rounds)
+Starting timer 104 at 3.17955 (25.201 MB, 540 rounds) after 0.0596484
+Starting timer 107 at 0.0571009 (2.4 MB, 15 rounds) after 0.264517
+Stopped timer 107 at 0.0618087 (2.56 MB, 16 rounds)
+Starting timer 109 at 1.64546 (12.001 MB, 330 rounds) after 0.160779
+Stopped timer 109 at 1.74996 (12.801 MB, 352 rounds)
+Starting timer 108 at 0.320115 (4.79952 MB, 30 rounds) after 0.244515
+Stopped timer 108 at 0.34144 (5.11949 MB, 32 rounds)
+Stopped timer 104 at 3.38459 (26.881 MB, 576 rounds)
+Starting timer 105 at 0.736286 (4.55634 MB, 120 rounds) after 0.216531
+Stopped timer 105 at 0.783237 (4.8601 MB, 128 rounds)
+Starting timer 104 at 3.38459 (26.881 MB, 576 rounds) after 0.0586046
+Starting timer 107 at 0.0618087 (2.56 MB, 16 rounds) after 0.259712
+Stopped timer 107 at 0.063912 (2.72 MB, 17 rounds)
+Starting timer 109 at 1.74996 (12.801 MB, 352 rounds) after 0.157319
+Stopped timer 109 at 1.85667 (13.6011 MB, 374 rounds)
+Starting timer 108 at 0.34144 (5.11949 MB, 32 rounds) after 0.242694
+Stopped timer 108 at 0.361632 (5.43946 MB, 34 rounds)
+Stopped timer 104 at 3.58884 (28.5611 MB, 612 rounds)
+Starting timer 105 at 0.783237 (4.8601 MB, 128 rounds) after 0.215908
+Stopped timer 105 at 0.831824 (5.16385 MB, 136 rounds)
+Starting timer 104 at 3.58884 (28.5611 MB, 612 rounds) after 0.0570376
+Starting timer 107 at 0.063912 (2.72 MB, 17 rounds) after 0.25931
+Stopped timer 107 at 0.0651802 (2.88 MB, 18 rounds)
+Starting timer 109 at 1.85667 (13.6011 MB, 374 rounds) after 0.15388
+Stopped timer 109 at 1.96453 (14.4012 MB, 396 rounds)
+Starting timer 108 at 0.361632 (5.43946 MB, 34 rounds) after 0.24155
+Stopped timer 108 at 0.381877 (5.75942 MB, 36 rounds)
+Stopped timer 104 at 3.7943 (30.2412 MB, 648 rounds)
+Starting timer 105 at 0.831824 (5.16385 MB, 136 rounds) after 0.213925
+Stopped timer 105 at 0.880938 (5.46761 MB, 144 rounds)
+Starting timer 104 at 3.7943 (30.2412 MB, 648 rounds) after 0.0583794
+Starting timer 107 at 0.0651802 (2.88 MB, 18 rounds) after 0.262477
+Stopped timer 107 at 0.066424 (3.04 MB, 19 rounds)
+Starting timer 109 at 1.96453 (14.4012 MB, 396 rounds) after 0.155882
+Stopped timer 109 at 2.07459 (15.2012 MB, 418 rounds)
+Starting timer 108 at 0.381877 (5.75942 MB, 36 rounds) after 0.245692
+Stopped timer 108 at 0.403248 (6.07939 MB, 38 rounds)
+Stopped timer 104 at 4.00211 (31.9212 MB, 684 rounds)
+Starting timer 105 at 0.880938 (5.46761 MB, 144 rounds) after 0.217101
+Stopped timer 105 at 0.92787 (5.77136 MB, 152 rounds)
+Starting timer 104 at 4.00211 (31.9212 MB, 684 rounds) after 0.0575056
+Starting timer 107 at 0.066424 (3.04 MB, 19 rounds) after 0.264378
+Stopped timer 107 at 0.0716999 (3.2 MB, 20 rounds)
+Starting timer 109 at 2.07459 (15.2012 MB, 418 rounds) after 0.159614
+Stopped timer 109 at 2.17878 (16.0013 MB, 440 rounds)
+Starting timer 108 at 0.403248 (6.07939 MB, 38 rounds) after 0.242437
+Stopped timer 108 at 0.424674 (6.39936 MB, 40 rounds)
+Stopped timer 104 at 4.20858 (33.6013 MB, 720 rounds)
+Starting timer 105 at 0.92787 (5.77136 MB, 152 rounds) after 0.217057
+Stopped timer 105 at 0.976873 (6.07512 MB, 160 rounds)
+Starting timer 104 at 4.20858 (33.6013 MB, 720 rounds) after 0.0585296
+Starting timer 107 at 0.0716999 (3.2 MB, 20 rounds) after 0.259482
+Stopped timer 107 at 0.0766367 (3.36 MB, 21 rounds)
+Starting timer 109 at 2.17878 (16.0013 MB, 440 rounds) after 0.160238
+Stopped timer 109 at 2.28173 (16.8013 MB, 462 rounds)
+Starting timer 108 at 0.424674 (6.39936 MB, 40 rounds) after 0.241757
+Stopped timer 108 at 0.446359 (6.71933 MB, 42 rounds)
+Stopped timer 104 at 4.41452 (35.2813 MB, 756 rounds)
+Starting timer 105 at 0.976873 (6.07512 MB, 160 rounds) after 0.215476
+Stopped timer 105 at 1.02359 (6.37888 MB, 168 rounds)
+Starting timer 104 at 4.41452 (35.2813 MB, 756 rounds) after 0.0584897
+Starting timer 107 at 0.0766367 (3.36 MB, 21 rounds) after 0.257139
+Stopped timer 107 at 0.0832358 (3.52 MB, 22 rounds)
+Starting timer 109 at 2.28173 (16.8013 MB, 462 rounds) after 0.160811
+Stopped timer 109 at 2.3865 (17.6014 MB, 484 rounds)
+Starting timer 108 at 0.446359 (6.71933 MB, 42 rounds) after 0.243916
+Stopped timer 108 at 0.468412 (7.0393 MB, 44 rounds)
+Stopped timer 104 at 4.62237 (36.9614 MB, 792 rounds)
+Starting timer 105 at 1.02359 (6.37888 MB, 168 rounds) after 0.219698
+Stopped timer 105 at 1.07056 (6.68263 MB, 176 rounds)
+Starting timer 104 at 4.62237 (36.9614 MB, 792 rounds) after 0.0585178
+Starting timer 107 at 0.0832358 (3.52 MB, 22 rounds) after 0.262332
+Stopped timer 107 at 0.0843585 (3.68 MB, 23 rounds)
+Starting timer 109 at 2.3865 (17.6014 MB, 484 rounds) after 0.158698
+Stopped timer 109 at 2.49697 (18.4015 MB, 506 rounds)
+Starting timer 108 at 0.468412 (7.0393 MB, 44 rounds) after 0.247119
+Stopped timer 108 at 0.489806 (7.35926 MB, 46 rounds)
+Stopped timer 104 at 4.83148 (38.6415 MB, 828 rounds)
+Starting timer 105 at 1.07056 (6.68263 MB, 176 rounds) after 0.220661
+Stopped timer 105 at 1.1171 (6.98639 MB, 184 rounds)
+Starting timer 104 at 4.83148 (38.6415 MB, 828 rounds) after 0.0579583
+Starting timer 107 at 0.0843585 (3.68 MB, 23 rounds) after 0.265863
+Stopped timer 107 at 0.0854644 (3.84 MB, 24 rounds)
+Starting timer 109 at 2.49697 (18.4015 MB, 506 rounds) after 0.156525
+Stopped timer 109 at 2.60752 (19.2015 MB, 528 rounds)
+Starting timer 108 at 0.489806 (7.35926 MB, 46 rounds) after 0.245667
+Stopped timer 108 at 0.512066 (7.67923 MB, 48 rounds)
+Stopped timer 104 at 5.04177 (40.3215 MB, 864 rounds)
+Starting timer 105 at 1.1171 (6.98639 MB, 184 rounds) after 0.221745
+Stopped timer 105 at 1.16594 (7.29014 MB, 192 rounds)
+Starting timer 104 at 5.04177 (40.3215 MB, 864 rounds) after 0.060252
+Starting timer 107 at 0.0854644 (3.84 MB, 24 rounds) after 0.265886
+Stopped timer 107 at 0.0903945 (4 MB, 25 rounds)
+Starting timer 109 at 2.60752 (19.2015 MB, 528 rounds) after 0.160286
+Stopped timer 109 at 2.72013 (20.0016 MB, 550 rounds)
+Starting timer 108 at 0.512066 (7.67923 MB, 48 rounds) after 0.250652
+Stopped timer 108 at 0.533593 (7.9992 MB, 50 rounds)
+Stopped timer 104 at 5.25381 (42.0016 MB, 900 rounds)
+Starting timer 105 at 1.16594 (7.29014 MB, 192 rounds) after 0.223484
+Stopped timer 105 at 1.21549 (7.5939 MB, 200 rounds)
+Starting timer 104 at 5.25381 (42.0016 MB, 900 rounds) after 0.0584154
+Starting timer 107 at 0.0903945 (4 MB, 25 rounds) after 0.268438
+Stopped timer 107 at 0.0953336 (4.16 MB, 26 rounds)
+Starting timer 109 at 2.72013 (20.0016 MB, 550 rounds) after 0.16078
+Stopped timer 109 at 2.82362 (20.8017 MB, 572 rounds)
+Starting timer 108 at 0.533593 (7.9992 MB, 50 rounds) after 0.242723
+Stopped timer 108 at 0.554888 (8.31917 MB, 52 rounds)
+Stopped timer 104 at 5.45912 (43.6817 MB, 936 rounds)
+Starting timer 105 at 1.21549 (7.5939 MB, 200 rounds) after 0.214217
+Stopped timer 105 at 1.26262 (7.89766 MB, 208 rounds)
+Starting timer 104 at 5.45912 (43.6817 MB, 936 rounds) after 0.0583808
+Starting timer 107 at 0.0953336 (4.16 MB, 26 rounds) after 0.257078
+Stopped timer 107 at 0.103274 (4.32 MB, 27 rounds)
+Starting timer 109 at 2.82362 (20.8017 MB, 572 rounds) after 0.161557
+Stopped timer 109 at 2.92747 (21.6017 MB, 594 rounds)
+Starting timer 108 at 0.554888 (8.31917 MB, 52 rounds) after 0.244108
+Stopped timer 108 at 0.576516 (8.63914 MB, 54 rounds)
+Stopped timer 104 at 5.66685 (45.3617 MB, 972 rounds)
+Starting timer 105 at 1.26262 (7.89766 MB, 208 rounds) after 0.219025
+Stopped timer 105 at 1.31201 (8.20141 MB, 216 rounds)
+Starting timer 104 at 5.66685 (45.3617 MB, 972 rounds) after 0.0583599
+Starting timer 107 at 0.103274 (4.32 MB, 27 rounds) after 0.258566
+Stopped timer 107 at 0.106387 (4.48 MB, 28 rounds)
+Starting timer 109 at 2.92747 (21.6017 MB, 594 rounds) after 0.157843
+Stopped timer 109 at 3.03826 (22.4018 MB, 616 rounds)
+Starting timer 108 at 0.576516 (8.63914 MB, 54 rounds) after 0.247002
+Stopped timer 108 at 0.598075 (8.9591 MB, 56 rounds)
+Stopped timer 104 at 5.877 (47.0418 MB, 1008 rounds)
+Starting timer 105 at 1.31201 (8.20141 MB, 216 rounds) after 0.219144
+Stopped timer 105 at 1.36045 (8.50517 MB, 224 rounds)
+Starting timer 104 at 5.877 (47.0418 MB, 1008 rounds) after 0.0600467
+Starting timer 107 at 0.106387 (4.48 MB, 28 rounds) after 0.267803
+Stopped timer 107 at 0.110645 (4.64 MB, 29 rounds)
+Starting timer 109 at 3.03826 (22.4018 MB, 616 rounds) after 0.161294
+Stopped timer 109 at 3.14368 (23.2019 MB, 638 rounds)
+Starting timer 108 at 0.598075 (8.9591 MB, 56 rounds) after 0.245155
+Stopped timer 108 at 0.618769 (9.27907 MB, 58 rounds)
+Stopped timer 104 at 6.08388 (48.7219 MB, 1044 rounds)
+Starting timer 105 at 1.36045 (8.50517 MB, 224 rounds) after 0.218511
+Stopped timer 105 at 1.4081 (8.80892 MB, 232 rounds)
+Starting timer 104 at 6.08388 (48.7219 MB, 1044 rounds) after 0.0590836
+Starting timer 107 at 0.110645 (4.64 MB, 29 rounds) after 0.26165
+Stopped timer 107 at 0.115482 (4.8 MB, 30 rounds)
+Starting timer 109 at 3.14368 (23.2019 MB, 638 rounds) after 0.161128
+Stopped timer 109 at 3.24817 (24.0019 MB, 660 rounds)
+Starting timer 108 at 0.618769 (9.27907 MB, 58 rounds) after 0.244944
+Stopped timer 108 at 0.63934 (9.59904 MB, 60 rounds)
+Stopped timer 104 at 6.28934 (50.4019 MB, 1080 rounds)
+Starting timer 105 at 1.4081 (8.80892 MB, 232 rounds) after 0.216922
+Stopped timer 105 at 1.45748 (9.11268 MB, 240 rounds)
+Starting timer 104 at 6.28934 (50.4019 MB, 1080 rounds) after 0.0582136
+Starting timer 107 at 0.115482 (4.8 MB, 30 rounds) after 0.257491
+Stopped timer 107 at 0.118286 (4.96 MB, 31 rounds)
+Starting timer 109 at 3.24817 (24.0019 MB, 660 rounds) after 0.155773
+Stopped timer 109 at 3.36223 (24.802 MB, 682 rounds)
+Starting timer 108 at 0.63934 (9.59904 MB, 60 rounds) after 0.24921
+Stopped timer 108 at 0.661517 (9.91901 MB, 62 rounds)
+Stopped timer 104 at 6.50313 (52.082 MB, 1116 rounds)
+Starting timer 105 at 1.45748 (9.11268 MB, 240 rounds) after 0.222644
+Stopped timer 105 at 1.50507 (9.41644 MB, 248 rounds)
+Starting timer 104 at 6.50313 (52.082 MB, 1116 rounds) after 0.0584522
+Starting timer 107 at 0.118286 (4.96 MB, 31 rounds) after 0.271974
+Stopped timer 107 at 0.121188 (5.12 MB, 32 rounds)
+Starting timer 109 at 3.36223 (24.802 MB, 682 rounds) after 0.160837
+Stopped timer 109 at 3.46771 (25.602 MB, 704 rounds)
+Starting timer 108 at 0.661517 (9.91901 MB, 62 rounds) after 0.244157
+Stopped timer 108 at 0.683144 (10.239 MB, 64 rounds)
+Stopped timer 104 at 6.70984 (53.762 MB, 1152 rounds)
+Starting timer 105 at 1.50507 (9.41644 MB, 248 rounds) after 0.217619
+Stopped timer 105 at 1.55361 (9.72019 MB, 256 rounds)
+Starting timer 104 at 6.70984 (53.762 MB, 1152 rounds) after 0.0599651
+Starting timer 107 at 0.121188 (5.12 MB, 32 rounds) after 0.26066
+Stopped timer 107 at 0.125541 (5.28 MB, 33 rounds)
+Starting timer 109 at 3.46771 (25.602 MB, 704 rounds) after 0.15956
+Stopped timer 109 at 3.5799 (26.4021 MB, 726 rounds)
+Starting timer 108 at 0.683144 (10.239 MB, 64 rounds) after 0.250132
+Stopped timer 108 at 0.704954 (10.5589 MB, 66 rounds)
+Stopped timer 104 at 6.92312 (55.4421 MB, 1188 rounds)
+Starting timer 105 at 1.55361 (9.72019 MB, 256 rounds) after 0.224736
+Stopped timer 105 at 1.6015 (10.0239 MB, 264 rounds)
+Starting timer 104 at 6.92312 (55.4421 MB, 1188 rounds) after 0.0590047
+Starting timer 107 at 0.125541 (5.28 MB, 33 rounds) after 0.269513
+Stopped timer 107 at 0.130866 (5.44 MB, 34 rounds)
+Starting timer 109 at 3.5799 (26.4021 MB, 726 rounds) after 0.162662
+Stopped timer 109 at 3.68611 (27.2022 MB, 748 rounds)
+Starting timer 108 at 0.704954 (10.5589 MB, 66 rounds) after 0.247042
+Stopped timer 108 at 0.72655 (10.8789 MB, 68 rounds)
+Stopped timer 104 at 7.13084 (57.1222 MB, 1224 rounds)
+Starting timer 105 at 1.6015 (10.0239 MB, 264 rounds) after 0.218843
+Stopped timer 105 at 1.64955 (10.3277 MB, 272 rounds)
+Starting timer 104 at 7.13084 (57.1222 MB, 1224 rounds) after 0.0591629
+Starting timer 107 at 0.130866 (5.44 MB, 34 rounds) after 0.260232
+Stopped timer 107 at 0.137514 (5.6 MB, 35 rounds)
+Starting timer 109 at 3.68611 (27.2022 MB, 748 rounds) after 0.160689
+Stopped timer 109 at 3.79292 (28.0022 MB, 770 rounds)
+Starting timer 108 at 0.72655 (10.8789 MB, 68 rounds) after 0.245911
+Stopped timer 108 at 0.748631 (11.1989 MB, 70 rounds)
+Stopped timer 104 at 7.34028 (58.8022 MB, 1260 rounds)
+Starting timer 105 at 1.64955 (10.3277 MB, 272 rounds) after 0.220573
+Stopped timer 105 at 1.69796 (10.6315 MB, 280 rounds)
+Starting timer 104 at 7.34028 (58.8022 MB, 1260 rounds) after 0.0595906
+Starting timer 107 at 0.137514 (5.6 MB, 35 rounds) after 0.264392
+Stopped timer 107 at 0.14202 (5.76 MB, 36 rounds)
+Starting timer 109 at 3.79292 (28.0022 MB, 770 rounds) after 0.162092
+Stopped timer 109 at 3.89898 (28.8023 MB, 792 rounds)
+Starting timer 108 at 0.748631 (11.1989 MB, 70 rounds) after 0.24608
+Stopped timer 108 at 0.770332 (11.5188 MB, 72 rounds)
+Stopped timer 104 at 7.54824 (60.4823 MB, 1296 rounds)
+Starting timer 105 at 1.69796 (10.6315 MB, 280 rounds) after 0.219171
+Stopped timer 105 at 1.74696 (10.9352 MB, 288 rounds)
+Starting timer 104 at 7.54824 (60.4823 MB, 1296 rounds) after 0.0579731
+Starting timer 107 at 0.14202 (5.76 MB, 36 rounds) after 0.260302
+Stopped timer 107 at 0.144827 (5.92 MB, 37 rounds)
+Starting timer 109 at 3.89898 (28.8023 MB, 792 rounds) after 0.157072
+Stopped timer 109 at 4.01185 (29.6024 MB, 814 rounds)
+Starting timer 108 at 0.770332 (11.5188 MB, 72 rounds) after 0.248221
+Stopped timer 108 at 0.792195 (11.8388 MB, 74 rounds)
+Stopped timer 104 at 7.76109 (62.1624 MB, 1332 rounds)
+Starting timer 105 at 1.74696 (10.9352 MB, 288 rounds) after 0.221899
+Stopped timer 105 at 1.79652 (11.239 MB, 296 rounds)
+Starting timer 104 at 7.76109 (62.1624 MB, 1332 rounds) after 0.0583717
+Starting timer 107 at 0.144827 (5.92 MB, 37 rounds) after 0.268762
+Stopped timer 107 at 0.146671 (6.08 MB, 38 rounds)
+Starting timer 109 at 4.01185 (29.6024 MB, 814 rounds) after 0.157748
+Stopped timer 109 at 4.13025 (30.4024 MB, 836 rounds)
+Starting timer 108 at 0.792195 (11.8388 MB, 74 rounds) after 0.254287
+Stopped timer 108 at 0.813571 (12.1588 MB, 76 rounds)
+Stopped timer 104 at 7.9787 (63.8424 MB, 1368 rounds)
+Starting timer 105 at 1.79652 (11.239 MB, 296 rounds) after 0.226453
+Stopped timer 105 at 1.84463 (11.5427 MB, 304 rounds)
+Starting timer 104 at 7.9787 (63.8424 MB, 1368 rounds) after 0.0591972
+Starting timer 107 at 0.146671 (6.08 MB, 38 rounds) after 0.273561
+Stopped timer 107 at 0.154024 (6.24 MB, 39 rounds)
+Starting timer 109 at 4.13025 (30.4024 MB, 836 rounds) after 0.16254
+Stopped timer 109 at 4.2359 (31.2025 MB, 858 rounds)
+Starting timer 108 at 0.813571 (12.1588 MB, 76 rounds) after 0.246798
+Stopped timer 108 at 0.835525 (12.4788 MB, 78 rounds)
+Stopped timer 104 at 8.18838 (65.5225 MB, 1404 rounds)
+Starting timer 105 at 1.84463 (11.5427 MB, 304 rounds) after 0.22079
+Stopped timer 105 at 1.89339 (11.8465 MB, 312 rounds)
+Starting timer 104 at 8.18838 (65.5225 MB, 1404 rounds) after 0.0603529
+Starting timer 107 at 0.154024 (6.24 MB, 39 rounds) after 0.264347
+Stopped timer 107 at 0.157763 (6.4 MB, 40 rounds)
+Starting timer 109 at 4.2359 (31.2025 MB, 858 rounds) after 0.162458
+Stopped timer 109 at 4.34236 (32.0026 MB, 880 rounds)
+Starting timer 108 at 0.835525 (12.4788 MB, 78 rounds) after 0.247001
+Stopped timer 108 at 0.857296 (12.7987 MB, 80 rounds)
+Stopped timer 104 at 8.39662 (67.2026 MB, 1440 rounds)
+Starting timer 105 at 1.89339 (11.8465 MB, 312 rounds) after 0.219897
+Stopped timer 105 at 1.94081 (12.1502 MB, 320 rounds)
+Starting timer 104 at 8.39662 (67.2026 MB, 1440 rounds) after 0.0585619
+Starting timer 107 at 0.157763 (6.4 MB, 40 rounds) after 0.263434
+Stopped timer 107 at 0.161839 (6.56 MB, 41 rounds)
+Starting timer 109 at 4.34236 (32.0026 MB, 880 rounds) after 0.161068
+Stopped timer 109 at 4.44803 (32.8026 MB, 902 rounds)
+Starting timer 108 at 0.857296 (12.7987 MB, 80 rounds) after 0.244921
+Stopped timer 108 at 0.87907 (13.1187 MB, 82 rounds)
+Stopped timer 104 at 8.60323 (68.8826 MB, 1476 rounds)
+Starting timer 105 at 1.94081 (12.1502 MB, 320 rounds) after 0.217742
+Stopped timer 105 at 1.9877 (12.454 MB, 328 rounds)
+Starting timer 104 at 8.60323 (68.8826 MB, 1476 rounds) after 0.0584054
+Starting timer 107 at 0.161839 (6.56 MB, 41 rounds) after 0.261296
+Stopped timer 107 at 0.165105 (6.72 MB, 42 rounds)
+Starting timer 109 at 4.44803 (32.8026 MB, 902 rounds) after 0.158909
+Stopped timer 109 at 4.55504 (33.6027 MB, 924 rounds)
+Starting timer 108 at 0.87907 (13.1187 MB, 82 rounds) after 0.244128
+Stopped timer 108 at 0.900754 (13.4387 MB, 84 rounds)
+Stopped timer 104 at 8.81177 (70.5627 MB, 1512 rounds)
+Starting timer 105 at 1.9877 (12.454 MB, 328 rounds) after 0.220146
+Stopped timer 105 at 2.03609 (12.7578 MB, 336 rounds)
+Starting timer 104 at 8.81177 (70.5627 MB, 1512 rounds) after 0.0593587
+Starting timer 107 at 0.165105 (6.72 MB, 42 rounds) after 0.265428
+Stopped timer 107 at 0.167544 (6.88 MB, 43 rounds)
+Starting timer 109 at 4.55504 (33.6027 MB, 924 rounds) after 0.160875
+Stopped timer 109 at 4.66419 (34.4028 MB, 946 rounds)
+Starting timer 108 at 0.900754 (13.4387 MB, 84 rounds) after 0.248368
+Stopped timer 108 at 0.9217 (13.7586 MB, 86 rounds)
+Stopped timer 104 at 9.0214 (72.2428 MB, 1548 rounds)
+Starting timer 105 at 2.03609 (12.7578 MB, 336 rounds) after 0.220615
+Stopped timer 105 at 2.0864 (13.0615 MB, 344 rounds)
+Starting timer 104 at 9.0214 (72.2428 MB, 1548 rounds) after 0.0585735
+Starting timer 107 at 0.167544 (6.88 MB, 43 rounds) after 0.263679
+Stopped timer 107 at 0.171108 (7.04 MB, 44 rounds)
+Starting timer 109 at 4.66419 (34.4028 MB, 946 rounds) after 0.158112
+Stopped timer 109 at 4.78003 (35.2028 MB, 968 rounds)
+Starting timer 108 at 0.9217 (13.7586 MB, 86 rounds) after 0.252984
+Stopped timer 108 at 0.943759 (14.0786 MB, 88 rounds)
+Stopped timer 104 at 9.23746 (73.9228 MB, 1584 rounds)
+Starting timer 105 at 2.0864 (13.0615 MB, 344 rounds) after 0.22435
+Stopped timer 105 at 2.13564 (13.3653 MB, 352 rounds)
+Starting timer 104 at 9.23746 (73.9228 MB, 1584 rounds) after 0.058376
+Starting timer 107 at 0.171108 (7.04 MB, 44 rounds) after 0.270686
+Stopped timer 107 at 0.174994 (7.2 MB, 45 rounds)
+Starting timer 109 at 4.78003 (35.2028 MB, 968 rounds) after 0.158747
+Stopped timer 109 at 4.89184 (36.0029 MB, 990 rounds)
+Starting timer 108 at 0.943759 (14.0786 MB, 88 rounds) after 0.248473
+Stopped timer 108 at 0.964758 (14.3986 MB, 90 rounds)
+Stopped timer 104 at 9.44899 (75.6029 MB, 1620 rounds)
+Starting timer 105 at 2.13564 (13.3653 MB, 352 rounds) after 0.22071
+Stopped timer 105 at 2.18543 (13.669 MB, 360 rounds)
+Starting timer 104 at 9.44899 (75.6029 MB, 1620 rounds) after 0.0589848
+Starting timer 107 at 0.174994 (7.2 MB, 45 rounds) after 0.267316
+Stopped timer 107 at 0.177797 (7.36 MB, 46 rounds)
+Starting timer 109 at 4.89184 (36.0029 MB, 990 rounds) after 0.158329
+Stopped timer 109 at 5.00328 (36.8029 MB, 1012 rounds)
+Starting timer 108 at 0.964758 (14.3986 MB, 90 rounds) after 0.248783
+Stopped timer 108 at 0.986208 (14.7185 MB, 92 rounds)
+Stopped timer 104 at 9.65943 (77.2829 MB, 1656 rounds)
+Starting timer 105 at 2.18543 (13.669 MB, 360 rounds) after 0.219663
+Stopped timer 105 at 2.23557 (13.9728 MB, 368 rounds)
+Starting timer 104 at 9.65943 (77.2829 MB, 1656 rounds) after 0.0595426
+Starting timer 107 at 0.177797 (7.36 MB, 46 rounds) after 0.266951
+Stopped timer 107 at 0.184407 (7.52 MB, 47 rounds)
+Starting timer 109 at 5.00328 (36.8029 MB, 1012 rounds) after 0.162148
+Stopped timer 109 at 5.10933 (37.603 MB, 1034 rounds)
+Starting timer 108 at 0.986208 (14.7185 MB, 92 rounds) after 0.246738
+Stopped timer 108 at 1.0077 (15.0385 MB, 94 rounds)
+Stopped timer 104 at 9.86806 (78.963 MB, 1692 rounds)
+Starting timer 105 at 2.23557 (13.9728 MB, 368 rounds) after 0.218035
+Stopped timer 105 at 2.2854 (14.2765 MB, 376 rounds)
+Starting timer 104 at 9.86806 (78.963 MB, 1692 rounds) after 0.0587992
+Starting timer 107 at 0.184407 (7.52 MB, 47 rounds) after 0.262581
+Stopped timer 107 at 0.185677 (7.68 MB, 48 rounds)
+Starting timer 109 at 5.10933 (37.603 MB, 1034 rounds) after 0.157821
+Stopped timer 109 at 5.22216 (38.4031 MB, 1056 rounds)
+Starting timer 108 at 1.0077 (15.0385 MB, 94 rounds) after 0.249144
+Stopped timer 108 at 1.02902 (15.3585 MB, 96 rounds)
+Stopped timer 104 at 10.0815 (80.6431 MB, 1728 rounds)
+Starting timer 105 at 2.2854 (14.2765 MB, 376 rounds) after 0.222416
+Stopped timer 105 at 2.33338 (14.5803 MB, 384 rounds)
+Starting timer 104 at 10.0815 (80.6431 MB, 1728 rounds) after 0.0592628
+Starting timer 107 at 0.185677 (7.68 MB, 48 rounds) after 0.267811
+Stopped timer 107 at 0.192571 (7.84 MB, 49 rounds)
+Starting timer 109 at 5.22216 (38.4031 MB, 1056 rounds) after 0.161906
+Stopped timer 109 at 5.32846 (39.2031 MB, 1078 rounds)
+Starting timer 108 at 1.02902 (15.3585 MB, 96 rounds) after 0.246897
+Stopped timer 108 at 1.05041 (15.6784 MB, 98 rounds)
+Stopped timer 104 at 10.2889 (82.3231 MB, 1764 rounds)
+Starting timer 105 at 2.33338 (14.5803 MB, 384 rounds) after 0.218739
+Stopped timer 105 at 2.38095 (14.884 MB, 392 rounds)
+Starting timer 104 at 10.2889 (82.3231 MB, 1764 rounds) after 0.0588616
+Starting timer 107 at 0.192571 (7.84 MB, 49 rounds) after 0.262125
+Stopped timer 107 at 0.197821 (8 MB, 50 rounds)
+Starting timer 109 at 5.32846 (39.2031 MB, 1078 rounds) after 0.16109
+Stopped timer 109 at 5.43544 (40.0032 MB, 1100 rounds)
+Starting timer 108 at 1.05041 (15.6784 MB, 98 rounds) after 0.24668
+Stopped timer 108 at 1.07121 (15.9984 MB, 100 rounds)
+Stopped timer 104 at 10.4984 (84.0032 MB, 1800 rounds)
+Starting timer 105 at 2.38095 (14.884 MB, 392 rounds) after 0.220838
+Stopped timer 105 at 2.42879 (15.1878 MB, 400 rounds)
+Starting timer 104 at 10.4984 (84.0032 MB, 1800 rounds) after 0.0592888
+Starting timer 107 at 0.197821 (8 MB, 50 rounds) after 0.259288
+Stopped timer 107 at 0.209248 (8.16 MB, 51 rounds)
+Starting timer 109 at 5.43544 (40.0032 MB, 1100 rounds) after 0.163725
+Stopped timer 109 at 5.54106 (40.8033 MB, 1122 rounds)
+Starting timer 108 at 1.07121 (15.9984 MB, 100 rounds) after 0.248533
+Stopped timer 108 at 1.09188 (16.3184 MB, 102 rounds)
+Stopped timer 104 at 10.7077 (85.6833 MB, 1836 rounds)
+Starting timer 105 at 2.42879 (15.1878 MB, 400 rounds) after 0.22071
+Stopped timer 105 at 2.47696 (15.4916 MB, 408 rounds)
+Starting timer 104 at 10.7077 (85.6833 MB, 1836 rounds) after 0.0592858
+Starting timer 107 at 0.209248 (8.16 MB, 51 rounds) after 0.261413
+Stopped timer 107 at 0.21392 (8.32 MB, 52 rounds)
+Starting timer 109 at 5.54106 (40.8033 MB, 1122 rounds) after 0.1605
+Stopped timer 109 at 5.64804 (41.6033 MB, 1144 rounds)
+Starting timer 108 at 1.09188 (16.3184 MB, 102 rounds) after 0.246821
+Stopped timer 108 at 1.11389 (16.6383 MB, 104 rounds)
+Stopped timer 104 at 10.9177 (87.3633 MB, 1872 rounds)
+Starting timer 105 at 2.47696 (15.4916 MB, 408 rounds) after 0.221156
+Stopped timer 105 at 2.5269 (15.7953 MB, 416 rounds)
+Starting timer 104 at 10.9177 (87.3633 MB, 1872 rounds) after 0.0590949
+Starting timer 107 at 0.21392 (8.32 MB, 52 rounds) after 0.264152
+Stopped timer 107 at 0.215827 (8.48 MB, 53 rounds)
+Starting timer 109 at 5.64804 (41.6033 MB, 1144 rounds) after 0.15908
+Stopped timer 109 at 5.75839 (42.4034 MB, 1166 rounds)
+Starting timer 108 at 1.11389 (16.6383 MB, 104 rounds) after 0.247392
+Stopped timer 108 at 1.13506 (16.9583 MB, 106 rounds)
+Stopped timer 104 at 11.1266 (89.0434 MB, 1908 rounds)
+Starting timer 105 at 2.5269 (15.7953 MB, 416 rounds) after 0.218133
+Stopped timer 105 at 2.57578 (16.0991 MB, 424 rounds)
+Starting timer 104 at 11.1266 (89.0434 MB, 1908 rounds) after 0.0578813
+Starting timer 107 at 0.215827 (8.48 MB, 53 rounds) after 0.265142
+Stopped timer 107 at 0.221226 (8.64 MB, 54 rounds)
+Starting timer 109 at 5.75839 (42.4034 MB, 1166 rounds) after 0.160261
+Stopped timer 109 at 5.86239 (43.2035 MB, 1188 rounds)
+Starting timer 108 at 1.13506 (16.9583 MB, 106 rounds) after 0.243084
+Stopped timer 108 at 1.15701 (17.2783 MB, 108 rounds)
+Stopped timer 104 at 11.333 (90.7235 MB, 1944 rounds)
+Starting timer 105 at 2.57578 (16.0991 MB, 424 rounds) after 0.215381
+Stopped timer 105 at 2.6249 (16.4028 MB, 432 rounds)
+Starting timer 104 at 11.333 (90.7235 MB, 1944 rounds) after 0.0584532
+Starting timer 107 at 0.221226 (8.64 MB, 54 rounds) after 0.259268
+Stopped timer 107 at 0.223997 (8.8 MB, 55 rounds)
+Starting timer 109 at 5.86239 (43.2035 MB, 1188 rounds) after 0.158024
+Stopped timer 109 at 5.97445 (44.0035 MB, 1210 rounds)
+Starting timer 108 at 1.15701 (17.2783 MB, 108 rounds) after 0.248158
+Stopped timer 108 at 1.17864 (17.5982 MB, 110 rounds)
+Stopped timer 104 at 11.5446 (92.4035 MB, 1980 rounds)
+Starting timer 105 at 2.6249 (16.4028 MB, 432 rounds) after 0.220991
+Stopped timer 105 at 2.67547 (16.7066 MB, 440 rounds)
+Starting timer 104 at 11.5446 (92.4035 MB, 1980 rounds) after 0.0597603
+Starting timer 107 at 0.223997 (8.8 MB, 55 rounds) after 0.267409
+Stopped timer 107 at 0.227964 (8.96 MB, 56 rounds)
+Starting timer 109 at 5.97445 (44.0035 MB, 1210 rounds) after 0.159332
+Stopped timer 109 at 6.08739 (44.8036 MB, 1232 rounds)
+Starting timer 108 at 1.17864 (17.5982 MB, 110 rounds) after 0.250625
+Stopped timer 108 at 1.19966 (17.9182 MB, 112 rounds)
+Stopped timer 104 at 11.7572 (94.0836 MB, 2016 rounds)
+Starting timer 105 at 2.67547 (16.7066 MB, 440 rounds) after 0.221804
+Stopped timer 105 at 2.72278 (17.0103 MB, 448 rounds)
+Starting timer 104 at 11.7572 (94.0836 MB, 2016 rounds) after 0.058716
+Starting timer 107 at 0.227964 (8.96 MB, 56 rounds) after 0.267027
+Stopped timer 107 at 0.236067 (9.12 MB, 57 rounds)
+Starting timer 109 at 6.08739 (44.8036 MB, 1232 rounds) after 0.162209
+Stopped timer 109 at 6.19291 (45.6036 MB, 1254 rounds)
+Starting timer 108 at 1.19966 (17.9182 MB, 112 rounds) after 0.246713
+Stopped timer 108 at 1.22043 (18.2382 MB, 114 rounds)
+Stopped timer 104 at 11.9649 (95.7636 MB, 2052 rounds)
+Starting timer 105 at 2.72278 (17.0103 MB, 448 rounds) after 0.219183
+Stopped timer 105 at 2.76987 (17.3141 MB, 456 rounds)
+Starting timer 104 at 11.9649 (95.7636 MB, 2052 rounds) after 0.0584437
+Starting timer 107 at 0.236067 (9.12 MB, 57 rounds) after 0.260894
+Stopped timer 107 at 0.241509 (9.28 MB, 58 rounds)
+Starting timer 109 at 6.19291 (45.6036 MB, 1254 rounds) after 0.160826
+Stopped timer 109 at 6.29888 (46.4037 MB, 1276 rounds)
+Starting timer 108 at 1.22043 (18.2382 MB, 114 rounds) after 0.246021
+Stopped timer 108 at 1.24129 (18.5581 MB, 116 rounds)
+Stopped timer 104 at 12.1739 (97.4437 MB, 2088 rounds)
+Starting timer 105 at 2.76987 (17.3141 MB, 456 rounds) after 0.220323
+Stopped timer 105 at 2.81675 (17.6178 MB, 464 rounds)
+Starting timer 104 at 12.1739 (97.4437 MB, 2088 rounds) after 0.0582914
+Starting timer 107 at 0.241509 (9.28 MB, 58 rounds) after 0.258698
+Stopped timer 107 at 0.246497 (9.44 MB, 59 rounds)
+Starting timer 109 at 6.29888 (46.4037 MB, 1276 rounds) after 0.157753
+Stopped timer 109 at 6.40829 (47.2038 MB, 1298 rounds)
+Starting timer 108 at 1.24129 (18.5581 MB, 116 rounds) after 0.246293
+Stopped timer 108 at 1.26209 (18.8781 MB, 118 rounds)
+Stopped timer 104 at 12.3819 (99.1238 MB, 2124 rounds)
+Starting timer 105 at 2.81675 (17.6178 MB, 464 rounds) after 0.219391
+Stopped timer 105 at 2.86372 (17.9216 MB, 472 rounds)
+Starting timer 104 at 12.3819 (99.1238 MB, 2124 rounds) after 0.0580905
+Starting timer 107 at 0.246497 (9.44 MB, 59 rounds) after 0.263511
+Stopped timer 107 at 0.252743 (9.6 MB, 60 rounds)
+Starting timer 109 at 6.40829 (47.2038 MB, 1298 rounds) after 0.160341
+Stopped timer 109 at 6.51294 (48.0038 MB, 1320 rounds)
+Starting timer 108 at 1.26209 (18.8781 MB, 118 rounds) after 0.244191
+Stopped timer 108 at 1.28402 (19.1981 MB, 120 rounds)
+Stopped timer 104 at 12.5902 (100.804 MB, 2160 rounds)
+Starting timer 105 at 2.86372 (17.9216 MB, 472 rounds) after 0.219454
+Stopped timer 105 at 2.91315 (18.2254 MB, 480 rounds)
+Starting timer 104 at 12.5902 (100.804 MB, 2160 rounds) after 0.0585983
+Starting timer 107 at 0.252743 (9.6 MB, 60 rounds) after 0.259846
+Stopped timer 107 at 0.253973 (9.76 MB, 61 rounds)
+Starting timer 109 at 6.51294 (48.0038 MB, 1320 rounds) after 0.156444
+Stopped timer 109 at 6.62684 (48.8039 MB, 1342 rounds)
+Starting timer 108 at 1.28402 (19.1981 MB, 120 rounds) after 0.248403
+Stopped timer 108 at 1.30541 (19.518 MB, 122 rounds)
+Stopped timer 104 at 12.8011 (102.484 MB, 2196 rounds)
+Starting timer 105 at 2.91315 (18.2254 MB, 480 rounds) after 0.220105
+Stopped timer 105 at 2.96338 (18.5291 MB, 488 rounds)
+Starting timer 104 at 12.8011 (102.484 MB, 2196 rounds) after 0.0613599
+Starting timer 107 at 0.253973 (9.76 MB, 61 rounds) after 0.271661
+Stopped timer 107 at 0.255883 (9.92 MB, 62 rounds)
+Starting timer 109 at 6.62684 (48.8039 MB, 1342 rounds) after 0.159709
+Stopped timer 109 at 6.73693 (49.604 MB, 1364 rounds)
+Starting timer 108 at 1.30541 (19.518 MB, 122 rounds) after 0.2484
+Stopped timer 108 at 1.32657 (19.838 MB, 124 rounds)
+Stopped timer 104 at 13.0106 (104.164 MB, 2232 rounds)
+Starting timer 105 at 2.96338 (18.5291 MB, 488 rounds) after 0.220717
+Stopped timer 105 at 3.01071 (18.8329 MB, 496 rounds)
+Starting timer 104 at 13.0106 (104.164 MB, 2232 rounds) after 0.0589502
+Starting timer 107 at 0.255883 (9.92 MB, 62 rounds) after 0.268686
+Stopped timer 107 at 0.257169 (10.08 MB, 63 rounds)
+Starting timer 109 at 6.73693 (49.604 MB, 1364 rounds) after 0.159901
+Stopped timer 109 at 6.84739 (50.404 MB, 1386 rounds)
+Starting timer 108 at 1.32657 (19.838 MB, 124 rounds) after 0.249187
+Stopped timer 108 at 1.34811 (20.158 MB, 126 rounds)
+Stopped timer 104 at 13.222 (105.844 MB, 2268 rounds)
+Starting timer 105 at 3.01071 (18.8329 MB, 496 rounds) after 0.223035
+Stopped timer 105 at 3.05832 (19.1366 MB, 504 rounds)
+Starting timer 104 at 13.222 (105.844 MB, 2268 rounds) after 0.0590501
+Starting timer 107 at 0.257169 (10.08 MB, 63 rounds) after 0.267576
+Stopped timer 107 at 0.26247 (10.24 MB, 64 rounds)
+Starting timer 109 at 6.84739 (50.404 MB, 1386 rounds) after 0.162447
+Stopped timer 109 at 6.95169 (51.2041 MB, 1408 rounds)
+Starting timer 108 at 1.34811 (20.158 MB, 126 rounds) after 0.245207
+Stopped timer 108 at 1.37042 (20.478 MB, 128 rounds)
+Stopped timer 104 at 13.4309 (107.524 MB, 2304 rounds)
+Starting timer 105 at 3.05832 (19.1366 MB, 504 rounds) after 0.220325
+Stopped timer 105 at 3.10655 (19.4404 MB, 512 rounds)
+Stopped timer 103 at 17.2035 (132.084 MB, 2880 rounds)
+Starting timer 106 at 0 (0 MB, 0 rounds) after 7.42e-06
+Stopped timer 106 at 20.0249 (327.68 MB, 640 rounds)
+Stopped timer 10 at 48.8094 (548.406 MB, 5154 rounds)
+----- testing end -----

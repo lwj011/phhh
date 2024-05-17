@@ -108,36 +108,11 @@ def radix_sort(k0, D0, n_bits=16, get_D=True, signed=True):
         return D_order
     
 
-def compact_phhh1(t,p2):
-    # t is 0 or 1, p2 is payload. compact t=1 items to the head.
-    #leak:len(t)
-    #t.print_reveal_nested(end='\n')
-    c0 = p2.same_shape()
-    c1 = p2.same_shape()
-    label = p2.same_shape()
-    c1[0] = t[0]
-    c0[0] = 1 - c1[0]
-    @library.for_range_opt(len(t)-1)
-    def _(i):
-        c1[i+1] = c1[i] + t[i+1]
-        c0[i+1] = sint(i+2) - c1[i+1]
-    
-    @library.for_range_parallel(500, len(t))
-    def _(i):
-        temp_equ = t[i].equal(sint(1))   #?accelerate
-        label[i] = c1[i]*temp_equ + (c0[i]+c1[len(t)-1])*(1-temp_equ) - 1
-
-    apply_perm(label,t)
-    # apply_perm(label,p1)
-    apply_perm(label,p2)
-    return c1[len(t)-1]
 
     
 def get_frequency_secure_phhh1(sum_freq, equ):
     # compute the frequency for phhh1; the function is euqal to frequency[j-1] = frequency[j-1] + frequency[j]*equ[i][j-1] for all j, which unable to parallelize
     # sum_freq[i] = freq[i] + freq[i+1] +...+ freq[n]
-    
-    #compact
     p = sum_freq.same_shape()
     p.assign(sum_freq)
     t = equ.same_shape()
@@ -145,32 +120,33 @@ def get_frequency_secure_phhh1(sum_freq, equ):
     c0 = p.same_shape()
     c1 = p.same_shape()
     label = p.same_shape()
+
+    #compact
     c1[0] = t[0]
     c0[0] = 1 - c1[0]
     @library.for_range_opt(len(t)-1)
     def _(i):
         c1[i+1] = c1[i] + t[i+1]
-        c0[i+1] = sint(i+2) - c1[i+1]
-    
-    @library.for_range_parallel(500, len(t))
-    def _(i):
-        temp_equ = t[i].equal(sint(1))   #?accelerate
-        label[i] = c1[i]*temp_equ + (c0[i]+c1[len(t)-1])*(1-temp_equ) - 1
+        c0[i+1] = i+2 - c1[i+1]
+    start_timer(107)
+    label[:] = c1[:]*t[:] + (c0[:]+c1[len(t)-1])*(1-t[:]) - 1
+    stop_timer(107)
+    start_timer(109)
     apply_perm(label,t)
     apply_perm(label,p)
+    stop_timer(109)
 
     #get_frequency
     frequency = p.same_shape()
     frequency.assign_all(0)
-    @library.for_range_parallel(500, len(p)-1)
-    def _(j):
-        b21 = sint(2).equal(equ[j]+equ[j+1])
-        b22 = p[j+1] - p[j]
-        b31 = sint(1).equal(equ[j]+equ[j+1])
-        b32 = len(p) - p[j]
-        b2 = b21 * b22
-        b3 = b31 * b32
-        frequency[j] = b2 + b3
+    start_timer(108)
+    end = len(p)-1
+    frequency[:end] = (t[:end]&t[1:]) * (p[:end] - p[1:]) + (t[:end]^t[1:]) * p[:end] 
+    frequency[end] = t[end]
+    
+
+
+    stop_timer(108)
     apply_perm(label, frequency, reverse=True)
     return frequency
 
@@ -184,92 +160,89 @@ def phhh_1(k0,n_bits=16, t=1):
     start_timer(10)
     k = k0.same_shape()
     k.assign(k0)
+    lenk = len(k0)
+    lenk1 = len(k0) -1 
     start_timer(101)
     sorted_data = radix_sort(k,k,n_bits,signed=False)
     stop_timer(101)
     frequency = types.Array.create_from(types.sint(types.regint.inc(size=len(k),base=1,step=0)))#sint array [1,1,1...,1]
     fres_t = types.Matrix(n_bits, len(k), sintbit)  # 1 represent is HHH
-    equ = types.Matrix(n_bits,len(sorted_data)-1,sintbit)  #restore the equal information of k, 1 present equal
+    equ = types.Matrix(n_bits, len(sorted_data), sintbit)  #
     bs = types.Matrix.create_from(sorted_data.get_vector().bit_decompose(n_bits))  #bit_decompose
     bsh2l = bs.same_shape()
     bsh2l_t = types.Matrix(len(k0),n_bits,sint)
+    # bsh2l_t = types.Matrix(len(k0),n_bits,sintbit)
     @library.for_range(len(bs))
     def _(i):
         bsh2l[i] = bs[n_bits-1-i]
     @library.for_range(len(bsh2l))
     def _(i):
-        @library.for_range_parallel(500, len(bsh2l[i]))
+        @library.for_range(len(bsh2l[i]))
         def _(j):
             bsh2l_t[j][i] = bsh2l[i][j]
 
+    #get equal
     start_timer(102)
-    b = bsh2l[0]
-    @library.for_range_parallel(500, len(k)-1)
-    def _(j):
-        equ[0][j] = (b[j]^b[j+1])^sintbit(1)  
-    @library.for_range(n_bits -1)
-    def _(i):
-        b = bsh2l[i+1] #bs[x], x must be a natural number
-        @library.for_range_parallel(500, len(k)-1)
-        def _(j):
-            equ[i+1][j] = equ[i][j]&((b[j]^b[j+1])^sintbit(1))
-    stop_timer(102)
+    b = bsh2l[0] 
+    equ[0][0] = 1
+    equ[0][1:] = b[:lenk1]^b[1:]
 
     
+    @library.for_range(n_bits -1)
+    def _(i):
+        b = bsh2l[i+1]
+        equ[i+1][0] = 1
+        equ[i+1][1:] = (b[:lenk1]^b[1:])|equ[i][1:]
+        
+    stop_timer(102)
     
     start_timer(103)
-    hdata = sintbit.Tensor([n_bits,len(k0),n_bits])
     @library.for_range(n_bits)
     def _(i1):
         i = n_bits-i1-1    
-        # start_timer(103)
         start_timer(104)
         @library.for_range(len(k0)-1)
         def _(j1):
-            j = len(k0) - j1 -1
-            frequency[j-1] = frequency[j-1] + frequency[j]*equ[i][j-1]
-        # frequency 
-        
-
-              # operations where one of the operands is an sint either result in an sint or an sinbit, the latter for comparisons
+            j = len(k0) -j1 -1
+            frequency[j-1] = frequency[j-1] + frequency[j]
+        frequency_temp = get_frequency_secure_phhh1(frequency, equ[i])
+        frequency.assign(frequency_temp)
         stop_timer(104)
         start_timer(105)
-        @library.for_range_parallel(500, len(k0)-1)
-        def _(j1):
-            j = len(k0) - j1 -1
-            frequency[j] = frequency[j]*(1-equ[i][j-1])
-            fres_t[i][j] = frequency[j].greater_equal(t)
-        fres_t[i][0] = frequency[0].greater_equal(t)
-        
+        fres_t[i][:] = frequency[:].greater_equal(t)
         stop_timer(105)
-        # stop_timer(103)
-        # start_timer(104)
-        start_timer(106)
-        @library.for_range_parallel(500, len(k0))
-        def _(j2):
-            temp_equ = fres_t[i][j2]
-            temp_bs = bsh2l_t[0].same_shape()
-            temp_bs.assign(bsh2l_t[j2])
-            temp_bs[:] = temp_bs[:] * temp_equ +(-2)*(temp_equ - 1) # 2 represent null
-            @library.for_range(len(temp_bs)-i-1)  # may opt
-            def _(l2):
-                temp_bs[l2+i+1] = 2
-            hdata[i][j2].assign(temp_bs)
-            frequency[j2] = frequency[j2]*(1-temp_equ)
-        stop_timer(106)
-    stop_timer(103)
+        frequency[:] = frequency[:]*(1-fres_t[i][:])
+    stop_timer(103)   
+    start_timer(106)
 
-    
-    
-    
-    # hdata.print_reveal_nested(end='\n')  #the true output without leaking
-    @library.for_range_opt(len(hdata))   #the output for observing, can be #
-    def _(i):
-        @library.for_range_opt(len(hdata[i]))
+    hdata_2 = bsh2l_t.same_shape() # due to memory limitations, I only generate and do not store. 2 represents the end of the data
+    hdata_2.assign(bsh2l_t)
+    temp_null = hdata_2[0].same_shape()
+    temp_null.assign_all(2)
+    @library.for_range(n_bits-1)
+    def _(i1):
+        i = n_bits -1 -i1
+        @library.for_range_parallel(1000, len(k0))
         def _(j):
-            @library.if_(fres_t[i][j].reveal())
-            def _():
-                hdata[i][j].print_reveal_nested(end='; ')
+            hdata_2[j][i] = 2
+        hdata = hdata_2.same_shape() # due to memory limitations, I only generate and do not store. 2 represents the end of the data
+        hdata.assign(hdata_2)
+        @library.for_range_parallel(1000, len(k0))
+        def _(j):
+            hdata[j][:] = hdata[j][:] * fres_t[i-1][j] +2*(1 - fres_t[i-1][j])
+            # @library.if_(hdata[j][0].reveal()!=2)  #the output for observing
+            # def _():
+            #     hdata[j].print_reveal_nested(end='; ')
+    hdata = bsh2l_t.same_shape() #for the lowest layer
+    hdata.assign(bsh2l_t)  
+    @library.for_range_parallel(1000, len(k0))
+    def _(j):
+        hdata[j][:] = hdata[j][:] * fres_t[n_bits-1][j] +2*(1 - fres_t[n_bits-1][j])
+        # @library.if_(hdata[j][0].reveal()!=2)  #the output for observing
+        # def _():
+        #     hdata[j].print_reveal_nested(end='; ')
+    stop_timer(106)
+
     stop_timer(10)
 
 
@@ -379,7 +352,7 @@ def get_frequency_secure(sorted_k0, n_bits, get_bits):
     c1 = compact(equ,k,indices)
     frequency = indices.same_shape()
     frequency.assign_all(0)
-    @library.for_range_parallel(500, len(sorted_k0)-1)
+    @library.for_range_parallel(500, len(sorted_k0)-1)   #?when there is no duplicate data, errors may occur
     def _(j):
         b21 = sint(2).equal(equ[j]+equ[j+1])
         b22 = indices[j+1] - indices[j]

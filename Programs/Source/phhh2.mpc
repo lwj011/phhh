@@ -1,5 +1,6 @@
 program.use_edabit(True)
-#program.use_split(3)
+program.use_trunc_pr = True
+program.use_split(3)
 from Compiler import types,library, instructions
 from Compiler.types import Array, sint, cint
 from Compiler.phhh1 import radix_sort, phhh_1, phhh_2, phhh_0, generate_zipf_distribution
@@ -36,7 +37,7 @@ t = sint(3)
 print_ln('the input data is:')
 a.print_reveal_nested(end='\n')
 #phhh_0(a,16,t)
-#phhh_1(a,16,t)
+phhh_1(a,16,t)
 #phhh_2(a,16,t)
 print_ln('-----layers testing end, 16 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----')
 
