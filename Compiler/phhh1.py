@@ -646,7 +646,7 @@ def phhh_0(k0,n_bits=16, t=1):
             def _(s):
                 hdata[i][j][s] = bs[n_bits - s - 1][j]
         stop_timer(303)
-    start_timer(303)
+    start_timer(304)
     @library.for_range_opt(n_bits)
     def _(i_temp):
         i = n_bits - i_temp -1
@@ -663,7 +663,7 @@ def phhh_0(k0,n_bits=16, t=1):
                     def _(s1):
                         pre.update(pre * hdata[i][j][s1].equal(hdata[s][j1][s1]))
                     fres[s][j1] -= pre * fres[i][j]
-    stop_timer(303)
+    stop_timer(304)
     
     #hdata.print_reveal_nested(end='\n')  #the true output without leaking
     # @library.for_range_opt(len(hdata))   #the output for observing

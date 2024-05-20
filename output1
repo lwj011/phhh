@@ -3,24 +3,24 @@ Trying to run 64-bit computation
 -------------------------basic testing starts------------------------------------
 the input data is:
 [6, 1, 5, 4, 7, 7, 7, 0, 5, 2, 4, 4, 5, 0, 2, 4, 6]
-Starting timer 30 at 0 (0 MB, 0 rounds) after 9.515e-06
-Starting timer 301 at 0 (0 MB, 0 rounds) after 2.803e-06
-Stopped timer 301 at 0.326267 (8.00586 MB, 87 rounds)
-Starting timer 302 at 0 (0 MB, 0 rounds) after 1.54e-06
-Stopped timer 302 at 0.3081 (0.009107 MB, 997 rounds)
-Starting timer 303 at 0 (0 MB, 0 rounds) after 3.353e-06
-Stopped timer 303 at 0.0016351 (4.2e-05 MB, 4 rounds)
-Starting timer 302 at 0.3081 (0.009107 MB, 997 rounds) after 0.00176114
-Stopped timer 302 at 0.527729 (0.017158 MB, 1706 rounds)
-Starting timer 303 at 0.0016351 (4.2e-05 MB, 4 rounds) after 0.219744
-Stopped timer 303 at 0.00293796 (8.4e-05 MB, 8 rounds)
-Starting timer 302 at 0.527729 (0.017158 MB, 1706 rounds) after 0.00143935
-Stopped timer 302 at 0.658412 (0.024153 MB, 2127 rounds)
-Starting timer 303 at 0.00293796 (8.4e-05 MB, 8 rounds) after 0.13079
-Stopped timer 303 at 0.00444667 (0.000126 MB, 12 rounds)
-Starting timer 303 at 0.00444667 (0.000126 MB, 12 rounds) after 5.8737e-05
-Stopped timer 303 at 6.91326 (0.086673 MB, 22146 rounds)
-Stopped timer 30 at 7.89847 (8.11668 MB, 24360 rounds)
+Starting timer 30 at 0 (0 MB, 0 rounds) after 1.082e-05
+Starting timer 301 at 0 (0 MB, 0 rounds) after 3.088e-06
+Stopped timer 301 at 0.2557 (8.00586 MB, 87 rounds)
+Starting timer 302 at 0 (0 MB, 0 rounds) after 4.415e-06
+Stopped timer 302 at 0.308194 (0.009107 MB, 997 rounds)
+Starting timer 303 at 0 (0 MB, 0 rounds) after 2.229e-06
+Stopped timer 303 at 0.00120339 (4.2e-05 MB, 4 rounds)
+Starting timer 302 at 0.308194 (0.009107 MB, 997 rounds) after 0.00128163
+Stopped timer 302 at 0.531908 (0.017158 MB, 1706 rounds)
+Starting timer 303 at 0.00120339 (4.2e-05 MB, 4 rounds) after 0.22382
+Stopped timer 303 at 0.00287206 (8.4e-05 MB, 8 rounds)
+Starting timer 302 at 0.531908 (0.017158 MB, 1706 rounds) after 0.00173087
+Stopped timer 302 at 0.660904 (0.024153 MB, 2127 rounds)
+Starting timer 303 at 0.00287206 (8.4e-05 MB, 8 rounds) after 0.129073
+Stopped timer 303 at 0.00443319 (0.000126 MB, 12 rounds)
+Starting timer 304 at 0 (0 MB, 0 rounds) after 2.968e-06
+Stopped timer 304 at 6.93687 (0.086547 MB, 22134 rounds)
+Stopped timer 30 at 7.85832 (8.11668 MB, 24360 rounds)
 -----basic testing end, 3 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----
 -------------------------big layers testing starts------------------------------------
 the input data is:
@@ -29,18 +29,19 @@ the input data is:
 Compiler: ./compile.py -I -R 64 -C phhh2.mpc
 	998058 dabits of replicated Z2^64 left
 Significant amount of unused dabits of replicated Z2^64 distorting the benchmark. For more accurate benchmarks, consider reducing the batch size with --batch-size.
-Spent 7.59591 seconds (0.11694 MB, 24359 rounds) on the online phase and 0.303948 seconds (8.00002 MB, 3 rounds) on the preprocessing/offline phase.
+Spent 7.62495 seconds (0.11694 MB, 24359 rounds) on the online phase and 0.23521 seconds (8.00002 MB, 3 rounds) on the preprocessing/offline phase.
 Communication details (rounds in parallel threads counted double):
-Passing around 8.11208 MB in 24232 rounds, taking 7.54327 seconds
-Receiving directly 0.00488 MB in 65 rounds, taking 0.0278732 seconds
-Sending directly 0.00488 MB in 65 rounds, taking 0.00457379 seconds
-CPU time = 2.57167
+Passing around 8.11208 MB in 24232 rounds, taking 7.56867 seconds
+Receiving directly 0.00488 MB in 65 rounds, taking 0.0262449 seconds
+Sending directly 0.00488 MB in 65 rounds, taking 0.00367193 seconds
+CPU time = 2.55776
 The following benchmarks are including preprocessing (offline phase).
-Time = 7.90488 seconds 
-Time30 = 7.89847 seconds (8.11668 MB, 24360 rounds)
-Time301 = 0.326267 seconds (8.00586 MB, 87 rounds)
-Time302 = 0.658412 seconds (0.024153 MB, 2127 rounds)
-Time303 = 6.91326 seconds (0.086673 MB, 22146 rounds)
+Time = 7.86659 seconds 
+Time30 = 7.85832 seconds (8.11668 MB, 24360 rounds)
+Time301 = 0.2557 seconds (8.00586 MB, 87 rounds)
+Time302 = 0.660904 seconds (0.024153 MB, 2127 rounds)
+Time303 = 0.00443319 seconds (0.000126 MB, 12 rounds)
+Time304 = 6.93687 seconds (0.086547 MB, 22134 rounds)
 Data sent = 8.11696 MB in ~24362 rounds (party 1 only)
 Global data sent = 24.3509 MB (all parties)
 Actual cost of program:

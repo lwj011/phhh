@@ -1,24 +1,24 @@
 -------------------------basic testing starts------------------------------------
 the input data is:
 [6, 1, 5, 4, 7, 7, 7, 0, 5, 2, 4, 4, 5, 0, 2, 4, 6]
-Starting timer 30 at 0 (0 MB, 0 rounds) after 5.941e-06
-Starting timer 301 at 0 (0 MB, 0 rounds) after 1.48e-06
-Stopped timer 301 at 0.326558 (8.00586 MB, 88 rounds)
-Starting timer 302 at 0 (0 MB, 0 rounds) after 1.659e-06
-Stopped timer 302 at 0.307765 (0.009107 MB, 997 rounds)
-Starting timer 303 at 0 (0 MB, 0 rounds) after 3.143e-06
-Stopped timer 303 at 0.0014062 (4.2e-05 MB, 4 rounds)
-Starting timer 302 at 0.307765 (0.009107 MB, 997 rounds) after 0.00151598
-Stopped timer 302 at 0.52745 (0.017158 MB, 1706 rounds)
-Starting timer 303 at 0.0014062 (4.2e-05 MB, 4 rounds) after 0.219779
-Stopped timer 303 at 0.00293631 (8.4e-05 MB, 8 rounds)
-Starting timer 302 at 0.52745 (0.017158 MB, 1706 rounds) after 0.00164051
-Stopped timer 302 at 0.658013 (0.024153 MB, 2127 rounds)
-Starting timer 303 at 0.00293631 (8.4e-05 MB, 8 rounds) after 0.130666
-Stopped timer 303 at 0.00427842 (0.000126 MB, 12 rounds)
-Starting timer 303 at 0.00427842 (0.000126 MB, 12 rounds) after 2.3459e-05
-Stopped timer 303 at 6.9137 (0.086673 MB, 22146 rounds)
-Stopped timer 30 at 7.89866 (8.11668 MB, 24361 rounds)
+Starting timer 30 at 0 (0 MB, 0 rounds) after 1.2148e-05
+Starting timer 301 at 0 (0 MB, 0 rounds) after 1.432e-06
+Stopped timer 301 at 0.25655 (8.00586 MB, 88 rounds)
+Starting timer 302 at 0 (0 MB, 0 rounds) after 3.5e-06
+Stopped timer 302 at 0.307716 (0.009107 MB, 997 rounds)
+Starting timer 303 at 0 (0 MB, 0 rounds) after 2.851e-06
+Stopped timer 303 at 0.00154586 (4.2e-05 MB, 4 rounds)
+Starting timer 302 at 0.307716 (0.009107 MB, 997 rounds) after 0.00166086
+Stopped timer 302 at 0.531314 (0.017158 MB, 1706 rounds)
+Starting timer 303 at 0.00154586 (4.2e-05 MB, 4 rounds) after 0.223711
+Stopped timer 303 at 0.00297035 (8.4e-05 MB, 8 rounds)
+Starting timer 302 at 0.531314 (0.017158 MB, 1706 rounds) after 0.0015429
+Stopped timer 302 at 0.660706 (0.024153 MB, 2127 rounds)
+Starting timer 303 at 0.00297035 (8.4e-05 MB, 8 rounds) after 0.1295
+Stopped timer 303 at 0.00410577 (0.000126 MB, 12 rounds)
+Starting timer 304 at 0 (0 MB, 0 rounds) after 3.417e-06
+Stopped timer 304 at 6.93693 (0.086547 MB, 22134 rounds)
+Stopped timer 30 at 7.85877 (8.11668 MB, 24361 rounds)
 -----basic testing end, 3 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----
 -------------------------big layers testing starts------------------------------------
 the input data is:
