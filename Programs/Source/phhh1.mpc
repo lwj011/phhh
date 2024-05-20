@@ -20,8 +20,8 @@ zipf_data = generate_zipf_distribution(n_bits, num, 1.03)
 a = sint.Array(num)
 a.assign(zipf_data)
 #phhh_0(a,n_bits,t)
-phhh_1(a,n_bits,t)
-#phhh_2(a, n_bits, t)
+#phhh_1(a,n_bits,t)
+phhh_2(a, n_bits, t)
 print_ln('----- testing end -----')
 
 

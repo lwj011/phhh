@@ -215,7 +215,7 @@ def phhh_1(k0,n_bits=16, t=1):
     stop_timer(103)   
     start_timer(106)
 
-    hdata_2 = bsh2l_t.same_shape() # due to memory limitations, I only generate and do not store. 2 represents the end of the data
+    hdata_2 = bsh2l_t.same_shape() # due to memory limitations, I only generate and do not store. 2 represents the end of the data; it uses bhstl_t and fres_t to generate hdata
     hdata_2.assign(bsh2l_t)
     temp_null = hdata_2[0].same_shape()
     temp_null.assign_all(2)
@@ -298,7 +298,7 @@ def bit_equal(a, b, n_bits, get_bits):
     return bits[0]
     '''
 
-def get_frequency(sorted_k0):
+def get_frequency_unsecure_phhh2(sorted_k0):
     # compute frequency, sorted_k0 is the sorted data, n_bits represents the length of data, get_bits represents calculating the frequency of the previous get_bits layers
     # return compacted data and frequency, the number of deduplication data c(cint)
     # leak:len(sorted_k0), the number of deduplication data
@@ -309,20 +309,9 @@ def get_frequency(sorted_k0):
     equ = k.same_shape()
     equ.assign_all(0)
     equ[0] = sint(1)
-    # @library.for_range_opt(len(k)-1)
-    # def _(i):
-    #     equ[i+1] = sint(1) - k[i+1].equal(k[i])  #too large
-    
-
     @library.for_range_parallel(500, len(k)-1)
     def _(i):
-        equ[i+1] = sint(1) - k[i+1].equal(k[i])  #too large
-
-    # @library.for_range_opt(len(k)-1, budget=10)
-    # def _(i):
-    #     equ[i+1] = sint(1) - k[i+1].equal(k[i])  #too large
-
-
+        equ[i+1] = sint(1) - k[i+1].equal(k[i]) 
     c1 = compact(equ,k,indices).reveal()  #leaking c1, the number of deduplication data
     frequency = indices.same_shape()
     frequency.assign_all(sint(0))
@@ -364,11 +353,6 @@ def get_frequency_secure(sorted_k0, n_bits, get_bits):
     return k,frequency
 
 
-
-
-
-
-
 #I think mp-spdz do not support prefix tree
 def phhh_2(k0,n_bits=16, t=1):
     # my second scheme for phhh, this scheme is insecure and more efficient than phhh_1. k0 is the data array, n_bits is the bit length. t is threshold.
@@ -380,161 +364,177 @@ def phhh_2(k0,n_bits=16, t=1):
     sorted_data = radix_sort(k,k,n_bits,signed=False) #sort
     stop_timer(201)
     start_timer(202)
-    data, frequency, c = get_frequency(sorted_data)  #get frequency of data, c is the number of duplicated data
+    data, frequency, c = get_frequency_unsecure_phhh2(sorted_data)  #get frequency of data, c is the number of duplicated data
     stop_timer(202)
-    
-    
-    # @library.for_range(c, len(data))  #delete the duplicated data
-    # def _(i):
-    #     data[i] *= sint(0)
 
+    # define variables
+    tags = cint.Array(len(k)+1)  #1 is boundary point, 0 is useful, 2 is deleted
+    tags.assign_all(0)
+    tags[0] = cint(1) #1 is boundary point, 0 is useful, 2 is deleted, [1:1/2)
+    tags.assign(2, len(k))
+    idx = cint.Array(2*len(k)+1)  #Store the data range corresponding to valid nodes, idx [-1] represents the number of nodes * 2
+    idx_p = sint.Array(2*len(k)+80)  #store the frequency for a layer, this is used for parallel
+    idx_t = cint.Array(2*len(k)+80)  #store the relationship with t for a layer, this is used for parallel
+    idx_div = cint.Array(len(k)+1)  #store the division point
     @library.for_range_parallel(500, len(data) - c)  #delete the duplicated data
     def _(i):
-        data[i+c] *= sint(0)
-    
-    tags = cint.Array(len(k)+1)  #1 is boundary point, 0 is useful, 2 is deleted
-    tags.assign_all(0)   
+        data[i+c] = 0
+        tags[i+c] = 2 
     bs = types.Matrix.create_from(data.get_vector().bit_decompose(n_bits))  #bit_decompose
     bsh2l = bs.same_shape()
     @library.for_range(len(bs))
     def _(i):
         bsh2l[i] = bs[n_bits-1-i]
-    tags[0] = cint(1) #1 is boundary point, 0 is useful, 2 is deleted
-    tags[c] = cint(2)
     fres = types.Matrix(n_bits, len(k), sint) #store the frequencys of all layers
-    fres.assign(sint(0))
-    fres_t = types.Matrix(n_bits, len(k), cint) # store the compare result, fres[i][j]>=t then fres_t[i][j]=1, else fres_t[i][j]=0, 2 represent do not know, 3 represent the origin is 1 but substract hhh items
+    fres.assign_all(0)
+    fres_t = types.Matrix(n_bits, len(k), cint) # store the compare result, fres[i][j]>=t then fres_t[i][j]=1, else fres_t[i][j]=0, 2 represent do not know or no such node , 3 represent the origin is 1 but substract hhh items
     fres_t.assign_all(2)
-    parent = types.Matrix(n_bits, len(k), cint) # restore the index of parent node, 0 represent null
-    temp_end = cint(0)  # for a node, the next layer is 0000111111, temp_begin is the left index of the node
-    temp_begin = cint(0)
-    temp_1 = cint(0)
-    
-    start_timer(203)
-    #create the highest layer of the prefixtree, prefixtree is stored as fres
-    b = bsh2l[0]
-    fre = fres[0]
-    @library.for_range(c)
-    def _(j):
-        @library.if_((tags[j]==1).bit_and(j>=temp_end))
-        def _():
-            temp_begin.update(j)
-            temp_end.update(c)
-            @library.for_range(c-temp_begin-1)
-            def _(s):
-                @library.if_(tags[temp_begin + s+1] != 0)
-                def _():
-                    temp_end.update(temp_begin + s + 1) #not include end
-                    break_loop()
-            temp_1.update(temp_end)
-            b_part = b.same_shape()
-            b_part.assign_all(0)
-            @library.for_range(temp_begin, temp_end)
-            def _(s):
-                b_part[s] = b[s]
-            b_part_reveal = b_part.reveal()
-            @library.for_range(temp_begin, temp_end)
-            def _(s):
-                @library.if_(b_part_reveal[s] == 1)
-                def _():  # it is not must to reveal
-                    temp_1.update(s)
-                    break_loop()
-            @library.if_(temp_1==temp_end)
-            def _():
-                fre[temp_begin] = len(k)
-            @library.if_(temp_1 == temp_begin)
-            def _():
-                fre[temp_begin] = len(k)
-            @library.if_((temp_1>temp_begin).bit_and(temp_1<temp_end))
-            def _():
-                temp_frequency0 = sint(0)
-                @library.for_range(temp_begin,temp_1)
-                def _(w):
-                    temp_frequency0.update(temp_frequency0 + frequency[w])
-                fre[temp_begin] = temp_frequency0
-                fre[temp_1] = len(k) - temp_frequency0
-                tags[temp_1] = 1
-    
-    #create the other layers of the prefixtree
-    @library.for_range(n_bits-1)
+    parent = types.Matrix(n_bits, len(k), cint) # restore the index of parent node, -1 represent null
+    parent.assign_all(-1)
+
+    #create the prefix tree
+    @library.for_range(n_bits)  # get the prefix tree with pruning
     def _(i):
-        b = bsh2l[i+1]
-        b_part = b.same_shape()
-        b_part.assign_all(0)
-        temp_end.update(0)
-        fre_t = fres_t[i]
-        @library.for_range(c)
+        b_reveal = bsh2l[i].reveal()
+        need_left = cint(1)  # 1 true; 0 false
+        node_count = cint(0) # the 2*count of the node
+        node_count_2 = cint(0) # the count of the node
+        idx.assign_all(0)
+        @library.for_range(c+1)  #find the left and right edge of the nodes, i.e. the idx
         def _(j):
-            @library.if_((tags[j]==1).bit_and(j>=temp_end))
+            @library.if_((need_left==0).bit_and(tags[j]==1))  # can not change order
             def _():
-                @library.if_(fre_t[j]==2)
+                idx[node_count] = j-1  #right edge
+                idx[node_count+1] = j  #left edge
+                node_count.update(node_count + 2)
+                node_count_2.update(node_count_2 + 1)
+            @library.if_((need_left==0).bit_and(tags[j]==2))
+            def _():
+                idx[node_count] = j-1
+                node_count.update(node_count + 1)
+                need_left.update(1)
+            @library.if_((need_left==1).bit_and(tags[j]==1))
+            def _():
+                idx[node_count] = j  #left edge
+                node_count.update(node_count + 1)
+                node_count_2.update(node_count_2 + 1)
+                need_left.update(0)    
+        idx[2*len(k)] = node_count
+      
+        idx_p.assign_all(0)
+        idx_t.assign_all(0)
+        idx_div.assign_all(0)
+        @library.for_range(node_count_2)  #given a node, get the [frequency] information of the children node
+        def _(j):
+            left = idx[j*2]  #left edge
+            right = idx[j*2+1]
+            idx_div[j] = left  # Division point, belonging to the right side
+            @library.while_do(lambda: (b_reveal[idx_div[j]]!=1).bit_and(idx_div[j]<right+1))  #find division point
+            def _():
+                idx_div[j] = idx_div[j] + 1
+            @library.for_range(idx_div[j] -left)  #get frequency of the children nodes
+            def _(s):
+                idx_p[j*2] = idx_p[j*2] + frequency[s+left]
+            @library.for_range(right - idx_div[j] + 1)
+            def _(s):
+                idx_p[j*2+1] = idx_p[j*2+1] + frequency[s+idx_div[j]]
+
+        iter = node_count.max(80)  #para100 iter100 is faster than para100 iter50
+        @library.for_range_parallel(80, iter)  #given a node, get the [if>=t] information of the children node
+        def _(j): 
+            idx_t[j] = idx_p[j].greater_equal(t).reveal()
+
+        @library.for_range(node_count_2)  #given a node, get the [pruning] information of the children node
+        def _(j): 
+            left = idx[j*2]
+            right = idx[j*2+1]
+            left_p = idx_p[j*2]  # left children node's frequency
+            right_p = idx_p[j*2+1]
+            left_t = idx_t[j*2]
+            right_t = idx_t[j*2+1]
+            div = idx_div[j]
+            @library.if_(div==(right + 1))  #only have left children node
+            def _():
+                fres[i][left] = left_p  # the frequency of the left children node
+                fres_t[i][left] = left_t
+                parent[i][left] = left
+                @library.if_(left_t==0)  #pruning
                 def _():
-                    fre_t[j] = fres[i][j].greater_equal(t).reveal()
-                    @library.if_(fre_t[j]==0)
-                    def _():
-                        @library.for_range(n_bits -i -1)
-                        def _(s):
-                            fres_t[s+i+1][j] = 0
-                @library.if_(fre_t[j]==1)   #means the node>=t, has children
-                def _():
-                    temp_begin.update(j)
-                    temp_end.update(j+1)
-                    @library.while_do(lambda: tags[temp_end]==0)  # find temp_end, the right bound
-                    def _():
-                        temp_end.update(temp_end+1)
-                    temp_1.update(temp_begin)
-                    @library.for_range(temp_begin, temp_end)  #find the index of the first 1, to divide the node
+                    @library.for_range(start=left,stop=right+1)
                     def _(s):
-                        b_part[s] = b[s]
-                    b_part_reveal = b_part.reveal()
-                    @library.while_do(lambda: (b_part_reveal[temp_1]!=1).bit_and(temp_1<temp_end))
-                    def _():
-                        temp_1.update(temp_1+1)
-                    @library.if_(temp_1==temp_end)
-                    def _():
-                        fres[i+1][temp_begin] = fres[i][temp_begin]
-                        parent[i+1][temp_begin] = temp_begin 
-                    @library.if_(temp_1==temp_begin)
-                    def _():
-                        fres[i+1][temp_begin] = fres[i][temp_begin]
-                        parent[i+1][temp_begin] = temp_begin
-                    @library.if_((temp_1>temp_begin).bit_and(temp_1<temp_end))
-                    def _():
-                        temp_frequency0 = sint(0)
-                        @library.for_range(temp_begin,temp_1)
-                        def _(w):
-                            temp_frequency0.update(temp_frequency0 + frequency[w])
-                        fres[i+1][temp_begin] = temp_frequency0
-                        fres[i+1][temp_1] = fres[i][temp_begin] - temp_frequency0
-                        parent[i+1][temp_begin] = temp_begin
-                        parent[i+1][temp_1] = temp_begin
-                        tags[temp_1] = 1             
-    @library.for_range(c)
-    def _(j):
-        @library.if_((tags[j]==1).bit_and(fres_t[n_bits-1][j]==2))
-        def _():
-            fres_t[n_bits-1][j] = fres[n_bits-1][j].greater_equal(t).reveal()
-    stop_timer(203)
-  
+                        tags[s] = 2
+                        @library.for_range(start=i+1,stop=n_bits)
+                        def _(r):
+                            bsh2l[r][s] = 2  #pruning to avoid leaking 
+            @library.if_(div==left)  #only have right children node
+            def _():
+                fres[i][left] = right_p
+                fres_t[i][left] = right_t
+                parent[i][left] = left
+                @library.if_(right_t==0)
+                def _():
+                    @library.for_range(start=left,stop=right+1)
+                    def _(s):
+                        tags[s] = 2
+                        @library.for_range(start=i+1,stop=n_bits)
+                        def _(r):
+                            bsh2l[r][s] = 2  #pruning to avoid leaking
+            @library.if_((div>left).bit_and(div<right+1))  #have two children nodes
+            def _():
+                fres[i][left] = left_p
+                fres[i][div] = right_p
+                fres_t[i][left] = left_t
+                fres_t[i][div] = right_t
+                parent[i][left] = left
+                parent[i][div] = left
+                tags[div] = 1
+                @library.if_(left_t==0)
+                def _():
+                    @library.for_range(start=left,stop=div)
+                    def _(s):
+                        tags[s] = 2
+                        @library.for_range(start=i+1,stop=n_bits)
+                        def _(r):
+                            bsh2l[r][s] = 2  #pruning to avoid leaking  
+                @library.if_(right_t==0)
+                def _():
+                    @library.for_range(start=div,stop=right+1)
+                    def _(s):
+                        tags[s] = 2
+                        @library.for_range(start=i+1,stop=n_bits)
+                        def _(r):
+                            bsh2l[r][s] = 2  #pruning to avoid leaking 
+            
     #get HHH items
-    start_timer(204)
     hhh = sint.Array(n_bits)
-    @library.for_range_opt(n_bits)
+    idx_3 = cint.Array(len(k)+20)  # store the index of fre_t==3
+    idx3_count = cint(0)
+    @library.for_range(n_bits)
     def _(i):
-        fre = fres[n_bits - i - 1]
+        fre = fres[n_bits - i - 1]  # from the lowest layer to the highest layer
         fre_t = fres_t[n_bits -i -1]
-        @library.for_range_opt(c)
+        idx_3.assign_all(0)
+        idx3_count.update(0)
+        @library.for_range(c)  # get the relationship with t for the nodes changed
         def _(j):
             @library.if_(fre_t[j]==3)
             def _():
-                fre_t[j] = fre[j].greater_equal(t).reveal()
+                idx_3[idx3_count] = j
+                idx3_count.update(idx3_count+1)
+        iter = idx3_count.max(20)
+        @library.for_range_parallel(20,iter)
+        def _(j):
+            fre_t[idx_3[j]] = fre[idx_3[j]].greater_equal(t).reveal()
+
+        @library.for_range(c)
+        def _(j):
             @library.if_((fre_t[j]==1))
             def _():
                 hhh.assign_all(2)
                 @library.for_range(n_bits - i)
                 def _(s): 
                     hhh[s] = bsh2l[s][j]
-                hhh.print_reveal_nested(end=';')
+                hhh.print_reveal_nested(end=';')  #no need to print
                 temp_i = cint(0)
                 temp_j = cint(0)
                 temp_j.update(j)
@@ -544,12 +544,77 @@ def phhh_2(k0,n_bits=16, t=1):
                     temp_j.update(parent[temp_i+1][temp_j])
                     fres[temp_i][temp_j] = fres[temp_i][temp_j] - fre[j]
                     fres_t[temp_i][temp_j] = 3
-    stop_timer(204)
     
     stop_timer(20)
+
+
+
+
+
    
 
 
+
+
+# def phhh_0(k0,n_bits=16, t=1):
+#     # the trivial scheme for phhh, this scheme is secure and  inefficient. k0 is the data array, n_bits is the bit length. t is threshold.
+#     # leak: bit length n_bits, data number len(k0)
+#     start_timer(30)
+#     k = k0.same_shape()
+#     k.assign(k0)
+#     start_timer(301)
+#     sorted_data = radix_sort(k,k,n_bits,signed=False)  
+#     stop_timer(301)
+#     fres = types.Matrix(n_bits, len(k0), sint)  #store frequency
+#     hdata = sint.Tensor([n_bits, len(k0), n_bits])  #store HHH
+#     fres_t = sintbit.Matrix(n_bits, len(k))  # 1 represent HHH
+#     fres.assign_all(0)
+#     hdata.assign_all(2)
+
+#     @library.for_range_opt(n_bits)
+#     def _(i_temp):
+#         i = n_bits - i_temp -1
+#         start_timer(302)
+#         datas, fres[i] = get_frequency_secure(sorted_data, n_bits, n_bits - i_temp)  #get_frequency
+#         stop_timer(302)
+#         start_timer(303)
+#         bs = types.Matrix.create_from(datas.get_vector().bit_decompose(n_bits))  #bit_decompose
+#         @library.for_range_parallel(500, len(k0))
+#         def _(j):
+#             @library.for_range_opt(i+1)
+#             def _(s):
+#                 hdata[i][j][s] = bs[n_bits - s - 1][j]
+#         stop_timer(303)
+#     start_timer(303)
+#     @library.for_range_opt(n_bits)
+#     def _(i_temp):
+#         i = n_bits - i_temp -1
+#         @library.for_range_parallel(500, len(k)) #may parallel
+#         def _(j):
+#             fres_t[i][j] = fres[i][j].greater_equal(t)
+#             hdata[i][j] = fres_t[i][j].if_else(hdata[i][j], sint(2))
+#             @library.for_range_opt(i)  #substract HHH items
+#             def _(s):
+#                 @library.for_range_opt(len(k))
+#                 def _(j1):
+#                     pre = sint(1)  # is parent of the items
+#                     @library.for_range_opt(s+1)  
+#                     def _(s1):
+#                         pre.update(pre * hdata[i][j][s1].equal(hdata[s][j1][s1]))
+#                     fres[s][j1] -= pre * fres[i][j]
+#     stop_timer(303)
+    
+#     #hdata.print_reveal_nested(end='\n')  #the true output without leaking
+#     # @library.for_range_opt(len(hdata))   #the output for observing
+#     # def _(i):
+#     #     @library.for_range_opt(len(hdata[i]))
+#     #     def _(j):
+#     #         @library.if_(fres_t[i][j].reveal())
+#     #         def _():
+#     #             hdata[i][j].print_reveal_nested(end='; ')
+#     stop_timer(30)
+
+       
 
 
 def phhh_0(k0,n_bits=16, t=1):
@@ -610,7 +675,9 @@ def phhh_0(k0,n_bits=16, t=1):
     #             hdata[i][j].print_reveal_nested(end='; ')
     stop_timer(30)
 
-       
+
+
+
 
 
 
