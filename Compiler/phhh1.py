@@ -1,5 +1,5 @@
 #this is the code of private hierarchical heavy hitters.
-#program.use_split(3)
+
 from Compiler import types, library, instructions
 from Compiler.library import break_loop, start_timer, stop_timer
 from Compiler.types import Array, MemValue
@@ -9,7 +9,7 @@ from Compiler.circuit import sha3_256
 from Compiler.GC.types import sbitvec, sbits
 from Compiler.instructions import time,crash
 import numpy as np
-#program.use_split(3)
+
 
 def gen_bit_perm(b):
     """
@@ -81,7 +81,6 @@ def radix_sort(k0, D0, n_bits=16, get_D=True, signed=True):
     k.assign(k0)
     D = D0.same_shape()
     D.assign(D0)
-    #D.print_reveal_nested(end='\n')
     assert len(k) == len(D)  # k=[2,5,0,1]
     bs = types.Matrix.create_from(k.get_vector().bit_decompose(n_bits))  #bit_decompose bs=[[0,1,0,1],[1,0,0,0],[0,1,0,0],[0,0,0,0,],...[0,0,0,0]]
     if signed and len(bs) > 1:
@@ -97,11 +96,8 @@ def radix_sort(k0, D0, n_bits=16, get_D=True, signed=True):
             apply_perm(h, bs[i + 1], reverse=True)
         @library.else_
         def _():
-            #D.print_reveal_nested(end='\n')
             apply_perm(h, D, reverse=True)
-            #D.print_reveal_nested(end='\n')
     D_order = inverse_permutation(h)  #
-    #D.print_reveal_nested(end='\n')
     if get_D:
         return D
     else:
@@ -128,28 +124,18 @@ def get_frequency_secure_phhh1(sum_freq, equ):
     def _(i):
         c1[i+1] = c1[i] + t[i+1]
         c0[i+1] = i+2 - c1[i+1]
-    start_timer(107)
     label[:] = c1[:]*t[:] + (c0[:]+c1[len(t)-1])*(1-t[:]) - 1
-    stop_timer(107)
-    start_timer(109)
     apply_perm(label,t)
     apply_perm(label,p)
-    stop_timer(109)
-
+  
     #get_frequency
     frequency = p.same_shape()
     frequency.assign_all(0)
-    start_timer(108)
     end = len(p)-1
     frequency[:end] = (t[:end]&t[1:]) * (p[:end] - p[1:]) + (t[:end]^t[1:]) * p[:end] 
     frequency[end] = t[end]
-    
-
-
-    stop_timer(108)
     apply_perm(label, frequency, reverse=True)
     return frequency
-
 
 
 
@@ -157,6 +143,8 @@ def get_frequency_secure_phhh1(sum_freq, equ):
 def phhh_1(k0,n_bits=16, t=1):
     # my first scheme for phhh, this scheme is secure and efficient. k0 is the data array, n_bits is the bit length. t is threshold.
     # leak: bit length n_bits, data number len(k0)
+
+    #Define variables
     start_timer(10)
     k = k0.same_shape()
     k.assign(k0)
@@ -171,7 +159,6 @@ def phhh_1(k0,n_bits=16, t=1):
     bs = types.Matrix.create_from(sorted_data.get_vector().bit_decompose(n_bits))  #bit_decompose
     bsh2l = bs.same_shape()
     bsh2l_t = types.Matrix(len(k0),n_bits,sint)
-    # bsh2l_t = types.Matrix(len(k0),n_bits,sintbit)
     @library.for_range(len(bs))
     def _(i):
         bsh2l[i] = bs[n_bits-1-i]
@@ -182,39 +169,34 @@ def phhh_1(k0,n_bits=16, t=1):
             bsh2l_t[j][i] = bsh2l[i][j]
 
     #get equal
-    start_timer(102)
+    # start_timer(102)
     b = bsh2l[0] 
     equ[0][0] = 1
     equ[0][1:] = b[:lenk1]^b[1:]
-
-    
     @library.for_range(n_bits -1)
     def _(i):
         b = bsh2l[i+1]
         equ[i+1][0] = 1
         equ[i+1][1:] = (b[:lenk1]^b[1:])|equ[i][1:]
-        
-    stop_timer(102)
+    # stop_timer(102)
     
-    start_timer(103)
+    # get frequency
+    # start_timer(103)
     @library.for_range(n_bits)
     def _(i1):
         i = n_bits-i1-1    
-        start_timer(104)
         @library.for_range(len(k0)-1)
         def _(j1):
             j = len(k0) -j1 -1
             frequency[j-1] = frequency[j-1] + frequency[j]
         frequency_temp = get_frequency_secure_phhh1(frequency, equ[i])
         frequency.assign(frequency_temp)
-        stop_timer(104)
-        start_timer(105)
         fres_t[i][:] = frequency[:].greater_equal(t)
-        stop_timer(105)
         frequency[:] = frequency[:]*(1-fres_t[i][:])
-    stop_timer(103)   
-    start_timer(106)
+    # stop_timer(103)
 
+    # get HHH
+    # start_timer(104)
     hdata_2 = bsh2l_t.same_shape() # due to memory limitations, I only generate and do not store. 2 represents the end of the data; it uses bhstl_t and fres_t to generate hdata
     hdata_2.assign(bsh2l_t)
     temp_null = hdata_2[0].same_shape()
@@ -233,6 +215,7 @@ def phhh_1(k0,n_bits=16, t=1):
             # @library.if_(hdata[j][0].reveal()!=2)  #the output for observing
             # def _():
             #     hdata[j].print_reveal_nested(end='; ')
+            # hdata[j].print_reveal_nested(end='; ')  #the true ouput without leaking
     hdata = bsh2l_t.same_shape() #for the lowest layer
     hdata.assign(bsh2l_t)  
     @library.for_range_parallel(1000, len(k0))
@@ -241,8 +224,8 @@ def phhh_1(k0,n_bits=16, t=1):
         # @library.if_(hdata[j][0].reveal()!=2)  #the output for observing
         # def _():
         #     hdata[j].print_reveal_nested(end='; ')
-    stop_timer(106)
-
+        # hdata[j].print_reveal_nested(end='; ')  #the true ouput without leaking
+    # stop_timer(104)
     stop_timer(10)
 
 
@@ -250,53 +233,9 @@ def phhh_1(k0,n_bits=16, t=1):
 
 
    
-def compact(t,p1,p2):
-    # t is 0 or 1, p1 and p2 is payload. compact t=1 items to the head.
-    #leak:len(t)
-    #t.print_reveal_nested(end='\n')
-    c0 = p1.same_shape()
-    c1 = p1.same_shape()
-    label = p1.same_shape()
-    c1[0] = t[0]
-    c0[0] = 1 - c1[0]
-    @library.for_range_opt(len(t)-1)
-    def _(i):
-        c1[i+1] = c1[i] + t[i+1]
-        c0[i+1] = sint(i+2) - c1[i+1]
-    
-    @library.for_range_parallel(500, len(t))
-    def _(i):
-        temp_equ = t[i].equal(sint(1))   #?accelerate
-        label[i] = c1[i]*temp_equ + (c0[i]+c1[len(t)-1])*(1-temp_equ) - 1
-
-    apply_perm(label,t)
-    apply_perm(label,p1)
-    apply_perm(label,p2)
-    return c1[len(t)-1]
-
-def bit_equal(a, b, n_bits, get_bits):
-    '''
-    secretly compare the highest get_bits bits, a b is sint with n_bits, return sint 0/1
-    leak:null
-    '''
-    dec_a = types.Array.create_from(a.bit_decompose(n_bits))
-    dec_b = types.Array.create_from(b.bit_decompose(n_bits))
-    bits = sint.Array(1)
-    bits[0] = sint(1)
-    @library.for_range(get_bits)
-    def _(i):
-        bits[0] = bits[0] * dec_a[n_bits - i -1].equal(dec_b[n_bits - i - 1])
-    return bits[0]
 
 
-    '''
-    dec_a =a.bit_decompose(n_bits)[n_bits-get_bits:]
-    dec_b =b.bit_decompose(n_bits)[n_bits-get_bits:]
-    bits = [1 - (bit_a - bit_b)%2 for bit_a,bit_b in zip(dec_a,dec_b)]
-    while len(bits) >cint(1):
-        bits.insert(cint(0), bits.pop()*bits.pop())
-    return bits[0]
-    '''
+
 
 def get_frequency_unsecure_phhh2(sorted_k0):
     # compute frequency, sorted_k0 is the sorted data, n_bits represents the length of data, get_bits represents calculating the frequency of the previous get_bits layers
@@ -306,68 +245,63 @@ def get_frequency_unsecure_phhh2(sorted_k0):
     k = sorted_k0.same_shape()
     k.assign(sorted_k0)
     indices = types.Array.create_from(types.sint(types.regint.inc(len(k))))  #sint Array [0,1,2,...,len(k)-1]
-    equ = k.same_shape()
+
+    # get equal
+    equ = sintbit.Array(len(k))
     equ.assign_all(0)
-    equ[0] = sint(1)
+    equ[0] = sintbit(1)
     @library.for_range_parallel(500, len(k)-1)
     def _(i):
-        equ[i+1] = sint(1) - k[i+1].equal(k[i]) 
-    c1 = compact(equ,k,indices).reveal()  #leaking c1, the number of deduplication data
+        equ[i+1] = (k[i+1].equal(k[i]))^1
+
+    #compact
+    p1 = k
+    p2 = indices
+    t = equ
+    c0 = p2.same_shape()
+    c1 = p2.same_shape()
+    label = p2.same_shape()
+    c1[0] = t[0]
+    c0[0] = 1 - c1[0]
+    @library.for_range_opt(len(t)-1)
+    def _(i):
+        c1[i+1] = c1[i] + t[i+1]
+        c0[i+1] = i+2 - c1[i+1]
+    label[:] = c1[:]*t[:] + (c0[:]+c1[len(t)-1])*(1-t[:]) - 1
+    apply_perm(label,t)
+    apply_perm(label,p1)
+    apply_perm(label,p2)
+    c = c1[len(t)-1].reveal() #leaking c, the number of deduplication data
+
+    #get frequency
     frequency = indices.same_shape()
     frequency.assign_all(sint(0))
-    @library.for_range_opt(c1-1)  #surprise, for_range(start,stop,step) :param start/stop/step: regint/cint/int
+    @library.for_range_opt(c-1) 
     def _(i):
         frequency[i] = indices[i+1]-indices[i]
-    frequency[c1-1] = len(indices) - indices[c1-1]
-    return k, frequency, c1
+    frequency[c-1] = len(indices) - indices[c-1]
+    return k, frequency, c
 
 
 
-def get_frequency_secure(sorted_k0, n_bits, get_bits):
-    # compute frequency, sorted_k0 is the sorted data, n_bits represents the length of data, get_bits represents calculating the frequency of the previous get_bits layers
-    # return compacted data and frequency, the frequency of deleted data is 0
-    # leak:len(sorted_k0)
-    # reference: Vogue:Faster Computation of Private Heavy Hitters.
-    # this function is designed for PHHH0(the trivial scheme)
-    k = sorted_k0.same_shape()
-    k.assign(sorted_k0)
-    indices = types.Array.create_from(types.sint(types.regint.inc(len(k))))  #sint Array [0,1,2,...,len(k)-1]
-    equ = k.same_shape()
-    equ.assign_all(0)
-    equ[0] = sint(1)
-    @library.for_range_parallel(500, len(k)-1)
-    def _(i):
-        equ[i+1] = sint(1) - bit_equal(k[i+1],k[i],n_bits, get_bits)
-    c1 = compact(equ,k,indices)
-    frequency = indices.same_shape()
-    frequency.assign_all(0)
-    @library.for_range_parallel(500, len(sorted_k0)-1)   #?when there is no duplicate data, errors may occur
-    def _(j):
-        b21 = sint(2).equal(equ[j]+equ[j+1])
-        b22 = indices[j+1] - indices[j]
-        b31 = sint(1).equal(equ[j]+equ[j+1])
-        b32 = len(indices) - indices[j]
-        b2 = b21 * b22
-        b3 = b31 * b32
-        frequency[j] = b2 + b3
-    return k,frequency
 
 
 #I think mp-spdz do not support prefix tree
 def phhh_2(k0,n_bits=16, t=1):
     # my second scheme for phhh, this scheme is insecure and more efficient than phhh_1. k0 is the data array, n_bits is the bit length. t is threshold.
-    # leak: bit length n_bits, data number len(k0),the number of deduplication data c, b[s](except the node less than t)
+    # leak: bit length n_bits, data number len(k0),the number of deduplication data c, b[s](except the node less than t),which is hhh items
     start_timer(20)
     k = k0.same_shape()
     k.assign(k0)
     start_timer(201)
     sorted_data = radix_sort(k,k,n_bits,signed=False) #sort
     stop_timer(201)
-    start_timer(202)
+    # start_timer(202)
     data, frequency, c = get_frequency_unsecure_phhh2(sorted_data)  #get frequency of data, c is the number of duplicated data
-    stop_timer(202)
+    # stop_timer(202)
 
     # define variables
+    # start_timer(203)
     tags = cint.Array(len(k)+1)  #1 is boundary point, 0 is useful, 2 is deleted
     tags.assign_all(0)
     tags[0] = cint(1) #1 is boundary point, 0 is useful, 2 is deleted, [1:1/2)
@@ -391,8 +325,10 @@ def phhh_2(k0,n_bits=16, t=1):
     fres_t.assign_all(2)
     parent = types.Matrix(n_bits, len(k), cint) # restore the index of parent node, -1 represent null
     parent.assign_all(-1)
+    # stop_timer(203)
 
     #create the prefix tree
+    # start_timer(204)
     @library.for_range(n_bits)  # get the prefix tree with pruning
     def _(i):
         b_reveal = bsh2l[i].reveal()
@@ -504,8 +440,10 @@ def phhh_2(k0,n_bits=16, t=1):
                         @library.for_range(start=i+1,stop=n_bits)
                         def _(r):
                             bsh2l[r][s] = 2  #pruning to avoid leaking 
-            
+    # stop_timer(204)        
+
     #get HHH items
+    # start_timer(205)
     hhh = sint.Array(n_bits)
     idx_3 = cint.Array(len(k)+20)  # store the index of fre_t==3
     idx3_count = cint(0)
@@ -521,6 +459,7 @@ def phhh_2(k0,n_bits=16, t=1):
             def _():
                 idx_3[idx3_count] = j
                 idx3_count.update(idx3_count+1)
+
         iter = idx3_count.max(20)
         @library.for_range_parallel(20,iter)
         def _(j):
@@ -534,7 +473,7 @@ def phhh_2(k0,n_bits=16, t=1):
                 @library.for_range(n_bits - i)
                 def _(s): 
                     hhh[s] = bsh2l[s][j]
-                hhh.print_reveal_nested(end=';')  #no need to print
+                # hhh.print_reveal_nested(end=';')  #the output for obversing& the true output, leaking the hhh value, which is hhh items
                 temp_i = cint(0)
                 temp_j = cint(0)
                 temp_j.update(j)
@@ -544,82 +483,84 @@ def phhh_2(k0,n_bits=16, t=1):
                     temp_j.update(parent[temp_i+1][temp_j])
                     fres[temp_i][temp_j] = fres[temp_i][temp_j] - fre[j]
                     fres_t[temp_i][temp_j] = 3
+    # stop_timer(205)
     
     stop_timer(20)
 
 
 
+def bit_equal_sint_phhh0(a,b,n_bits,cmp_bits):
+    """
+    secretly compare the highest cmp_bits(cint,int) bits, a b is sint(n_bits(must be int)), return sintbit 0/1, equal return 1
+    leak:null
+    communication: 40 rounds
+    """
+    c = a>>(n_bits-cmp_bits)
+    d = b>>(n_bits-cmp_bits)
+    return c.equal(d)
 
 
-   
+def substract_phhh0(fress, datasij, datass, n_bits, s1, fresij, fres_tij):
+    """
+    communication: 50 rounds
+    """
+    fress[:] -= bit_equal_sint_phhh0(datasij, datass[:], n_bits, s1) * fresij * fres_tij
+    return 0
+
+
+ 
+def get_frequency_secure_phhh0(sorted_k0, n_bits, get_bits):
+    # compute frequency, sorted_k0 is the sorted data, n_bits represents the length of data, get_bits represents calculating the frequency of the previous get_bits layers
+    # return compacted data and frequency, the frequency of deleted data is 0
+    # leak:len(sorted_k0)
+    # reference: Vogue:Faster Computation of Private Heavy Hitters.
+    # this function is designed for PHHH0(the trivial scheme)
+    k = sorted_k0.same_shape()
+    k.assign(sorted_k0)
+    equ = sintbit.Array(len(k))
+    equ.assign_all(0)
+    indices = types.Array.create_from(types.sint(types.regint.inc(len(k))))  #sint Array [0,1,2,...,len(k)-1]
+
+    #get equal
+    equ[0] = 1
+    @library.for_range_parallel(10, len(k)-1)  #get equ, 1 represents the first number of duplicate data
+    def _(i):
+        equ[i+1] = sintbit(1) - bit_equal_sint_phhh0(k[i+1],k[i],n_bits, get_bits)
+
+    #compact
+    p = indices
+    t = equ
+    c0 = p.same_shape()
+    c1 = p.same_shape()
+    label = p.same_shape()
+    c1[0] = t[0]
+    c0[0] = 1 - c1[0]
+    @library.for_range_opt(len(t)-1)
+    def _(i):
+        c1[i+1] = c1[i] + t[i+1]
+        c0[i+1] = i+2 - c1[i+1]
+    label[:] = c1[:]*t[:] + (c0[:]+c1[len(t)-1])*(1-t[:]) - 1
+    apply_perm(label,k)
+    apply_perm(label,t)
+    apply_perm(label,p)
+
+    #get_frequency
+    frequency = p.same_shape()
+    frequency.assign_all(0)
+    end = len(p)-1
+    frequency[:end] = (t[:end]&t[1:]) * (p[1:] - p[:end]) + (t[:end]^t[1:]) * (len(k) - p[:end]) 
+    frequency[end] = t[end]
+
+    return k, frequency
 
 
 
-
-# def phhh_0(k0,n_bits=16, t=1):
-#     # the trivial scheme for phhh, this scheme is secure and  inefficient. k0 is the data array, n_bits is the bit length. t is threshold.
-#     # leak: bit length n_bits, data number len(k0)
-#     start_timer(30)
-#     k = k0.same_shape()
-#     k.assign(k0)
-#     start_timer(301)
-#     sorted_data = radix_sort(k,k,n_bits,signed=False)  
-#     stop_timer(301)
-#     fres = types.Matrix(n_bits, len(k0), sint)  #store frequency
-#     hdata = sint.Tensor([n_bits, len(k0), n_bits])  #store HHH
-#     fres_t = sintbit.Matrix(n_bits, len(k))  # 1 represent HHH
-#     fres.assign_all(0)
-#     hdata.assign_all(2)
-
-#     @library.for_range_opt(n_bits)
-#     def _(i_temp):
-#         i = n_bits - i_temp -1
-#         start_timer(302)
-#         datas, fres[i] = get_frequency_secure(sorted_data, n_bits, n_bits - i_temp)  #get_frequency
-#         stop_timer(302)
-#         start_timer(303)
-#         bs = types.Matrix.create_from(datas.get_vector().bit_decompose(n_bits))  #bit_decompose
-#         @library.for_range_parallel(500, len(k0))
-#         def _(j):
-#             @library.for_range_opt(i+1)
-#             def _(s):
-#                 hdata[i][j][s] = bs[n_bits - s - 1][j]
-#         stop_timer(303)
-#     start_timer(303)
-#     @library.for_range_opt(n_bits)
-#     def _(i_temp):
-#         i = n_bits - i_temp -1
-#         @library.for_range_parallel(500, len(k)) #may parallel
-#         def _(j):
-#             fres_t[i][j] = fres[i][j].greater_equal(t)
-#             hdata[i][j] = fres_t[i][j].if_else(hdata[i][j], sint(2))
-#             @library.for_range_opt(i)  #substract HHH items
-#             def _(s):
-#                 @library.for_range_opt(len(k))
-#                 def _(j1):
-#                     pre = sint(1)  # is parent of the items
-#                     @library.for_range_opt(s+1)  
-#                     def _(s1):
-#                         pre.update(pre * hdata[i][j][s1].equal(hdata[s][j1][s1]))
-#                     fres[s][j1] -= pre * fres[i][j]
-#     stop_timer(303)
-    
-#     #hdata.print_reveal_nested(end='\n')  #the true output without leaking
-#     # @library.for_range_opt(len(hdata))   #the output for observing
-#     # def _(i):
-#     #     @library.for_range_opt(len(hdata[i]))
-#     #     def _(j):
-#     #         @library.if_(fres_t[i][j].reveal())
-#     #         def _():
-#     #             hdata[i][j].print_reveal_nested(end='; ')
-#     stop_timer(30)
-
-       
 
 
 def phhh_0(k0,n_bits=16, t=1):
     # the trivial scheme for phhh, this scheme is secure and  inefficient. k0 is the data array, n_bits is the bit length. t is threshold.
     # leak: bit length n_bits, data number len(k0)
+    # round: 20l^2(lenk)^2/parallel  (if bit_equal is 40 rounds)  --> 50*n_bits*len(k)
     start_timer(30)
     k = k0.same_shape()
     k.assign(k0)
@@ -627,52 +568,52 @@ def phhh_0(k0,n_bits=16, t=1):
     sorted_data = radix_sort(k,k,n_bits,signed=False)  
     stop_timer(301)
     fres = types.Matrix(n_bits, len(k0), sint)  #store frequency
+    datas = types.Matrix(n_bits, len(k0), sint) #Store data corresponding to fres
     hdata = sint.Tensor([n_bits, len(k0), n_bits])  #store HHH
     fres_t = sintbit.Matrix(n_bits, len(k))  # 1 represent HHH
     fres.assign_all(0)
     hdata.assign_all(2)
 
-    @library.for_range_opt(n_bits)
+    #get frequency and hdata
+    # start_timer(302)
+    @library.for_range(n_bits)  #get frequency and hdata
     def _(i_temp):
         i = n_bits - i_temp -1
-        start_timer(302)
-        datas, fres[i] = get_frequency_secure(sorted_data, n_bits, n_bits - i_temp)  #get_frequency
-        stop_timer(302)
-        start_timer(303)
-        bs = types.Matrix.create_from(datas.get_vector().bit_decompose(n_bits))  #bit_decompose
-        @library.for_range_parallel(500, len(k0))
+        datas[i], fres[i] = get_frequency_secure_phhh0(sorted_data, n_bits, n_bits - i_temp)  #get_frequency
+        bs = types.Matrix.create_from(datas[i].get_vector().bit_decompose(n_bits))  #bit_decompose
+        @library.for_range(len(k0))
         def _(j):
-            @library.for_range_opt(i+1)
+            @library.for_range(i+1)
             def _(s):
                 hdata[i][j][s] = bs[n_bits - s - 1][j]
-        stop_timer(303)
-    start_timer(304)
-    @library.for_range_opt(n_bits)
-    def _(i_temp):
-        i = n_bits - i_temp -1
-        @library.for_range_parallel(500, len(k)) #may parallel
-        def _(j):
-            fres_t[i][j] = fres[i][j].greater_equal(t)
-            hdata[i][j] = fres_t[i][j].if_else(hdata[i][j], sint(2))
-            @library.for_range_opt(i)  #substract HHH items
-            def _(s):
-                @library.for_range_opt(len(k))
-                def _(j1):
-                    pre = sint(1)  # is parent of the items
-                    @library.for_range_opt(s+1)  
-                    def _(s1):
-                        pre.update(pre * hdata[i][j][s1].equal(hdata[s][j1][s1]))
-                    fres[s][j1] -= pre * fres[i][j]
-    stop_timer(304)
+    # stop_timer(302)
     
-    #hdata.print_reveal_nested(end='\n')  #the true output without leaking
+    #get HHH
+    # start_timer(303)
+    @library.for_range(n_bits)
+    def _(i_temp):
+        i = n_bits - i_temp -1                    
+        fres_t[i][:] = fres[i][:].greater_equal(t)   
+        @library.for_range(len(k))
+        def _(j):
+            res = Array.create_from(types.cint(types.regint.inc(size=n_bits, base=1)))  #cint Array [1,2,...,n_bits]
+            @library.for_range_parallel(n_bits, n_bits)  #substract HHH items; Loop n_bits layers are beneficial for improving efficiency through parallelism without affecting accuracy, as the fres[i:] of additional modifications will not be used
+            def _(s):
+                substract_phhh0(fres[s], datas[i][j], datas[s], n_bits, res[s], fres[i][j], fres_t[i][j])
+        @library.for_range(len(k)) #may parallel
+        def _(j):
+            hdata[i][j] = fres_t[i][j].if_else(hdata[i][j], sint(2))
+    # stop_timer(303)
+    
+    # hdata.print_reveal_nested(end='\n')  #the true output without leaking
     # @library.for_range_opt(len(hdata))   #the output for observing
     # def _(i):
     #     @library.for_range_opt(len(hdata[i]))
     #     def _(j):
-    #         @library.if_(fres_t[i][j].reveal())
+    #         @library.if_(hdata[i][j][0].reveal()!=cint(2))
     #         def _():
     #             hdata[i][j].print_reveal_nested(end='; ')
+    
     stop_timer(30)
 
 
@@ -687,7 +628,7 @@ def generate_zipf_distribution(n_bits, num, zipf_exponent=1.03):
     max_value = 2**n_bits - 1
     zipf_data = np.clip(zipf_data, 1, max_value)
     return list(map(int, zipf_data.astype(np.uint64)))
-    #return zipf_data
+   
 
 
 

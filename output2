@@ -1,26 +1,26 @@
--------------------------basic testing starts------------------------------------
+-------------------------basic accuracy testing starts------------------------------------
 the input data is:
 [6, 1, 5, 4, 7, 7, 7, 0, 5, 2, 4, 4, 5, 0, 2, 4, 6]
-Starting timer 30 at 0 (0 MB, 0 rounds) after 1.0268e-05
-Starting timer 301 at 0 (0 MB, 0 rounds) after 2.773e-06
-Stopped timer 301 at 0.255782 (8.00586 MB, 88 rounds)
-Starting timer 302 at 0 (0 MB, 0 rounds) after 5.053e-06
-Stopped timer 302 at 0.308167 (0.009107 MB, 997 rounds)
-Starting timer 303 at 0 (0 MB, 0 rounds) after 3.062e-06
-Stopped timer 303 at 0.00137137 (4.2e-05 MB, 4 rounds)
-Starting timer 302 at 0.308167 (0.009107 MB, 997 rounds) after 0.00150817
-Stopped timer 302 at 0.532156 (0.017158 MB, 1706 rounds)
-Starting timer 303 at 0.00137137 (4.2e-05 MB, 4 rounds) after 0.22414
-Stopped timer 303 at 0.00254442 (8.4e-05 MB, 8 rounds)
-Starting timer 302 at 0.532156 (0.017158 MB, 1706 rounds) after 0.00131153
-Stopped timer 302 at 0.661548 (0.024153 MB, 2127 rounds)
-Starting timer 303 at 0.00254442 (8.4e-05 MB, 8 rounds) after 0.129508
-Stopped timer 303 at 0.00389961 (0.000126 MB, 12 rounds)
-Starting timer 304 at 0 (0 MB, 0 rounds) after 3.013e-06
-Stopped timer 304 at 6.93662 (0.086547 MB, 22134 rounds)
-Stopped timer 30 at 7.85843 (8.11668 MB, 24361 rounds)
------basic testing end, 3 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----
--------------------------big layers testing starts------------------------------------
+Starting timer 30 at 0 (0 MB, 0 rounds) after 1.1345e-05
+Starting timer 301 at 0 (0 MB, 0 rounds) after 2.794e-06
+Stopped timer 301 at 0.085669 (1.44253 MB, 88 rounds)
+Stopped timer 30 at 1.20016 (12.3773 MB, 3138 rounds)
+Starting timer 10 at 0 (0 MB, 0 rounds) after 3.307e-06
+Starting timer 101 at 0 (0 MB, 0 rounds) after 2.179e-06
+Stopped timer 101 at 0.0207728 (0.005842 MB, 84 rounds)
+Stopped timer 10 at 0.0614759 (0.019118 MB, 231 rounds)
+Starting timer 20 at 0 (0 MB, 0 rounds) after 3.145e-06
+Starting timer 201 at 0 (0 MB, 0 rounds) after 1.992e-06
+Stopped timer 201 at 0.0210167 (0.005842 MB, 84 rounds)
+Stopped timer 20 at 0.055705 (0.021324 MB, 197 rounds)
+-----basic testing end, 3 layers, 17 items, time30 phhh0, time10 phhh1, time20 phhh2-----
+-------------------------big layers accuracy testing starts------------------------------------
 the input data is:
 [60000, 12345, 50001, 41011, 71, 71, 71, 0, 50001, 27777, 41011, 41011, 50001, 0, 27777, 41011, 60000]
------layers testing end, 16 layers, 17 items, time10 phhh0, time11 phhh1, time12 phhh2, time13 radix sort-----
+-----layers testing end, 16 layers, 17 items-----
+-------------------------no hhh accuracy testing starts------------------------------------
+the input data is:
+[6, 1, 2, 4, 7]
+-----no hhh testing end-----
+-------------------------random accuracy testing starts------------------------------------
+-----random testing end-----
