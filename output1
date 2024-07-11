@@ -3,50 +3,59 @@ Trying to run 64-bit computation
 -------------------------basic accuracy testing starts------------------------------------
 the input data is:
 [6, 1, 5, 4, 7, 7, 7, 0, 5, 2, 4, 4, 5, 0, 2, 4, 6]
-Starting timer 30 at 0 (0 MB, 0 rounds) after 1.2473e-05
-Starting timer 301 at 0 (0 MB, 0 rounds) after 1.548e-06
-Stopped timer 301 at 0.0856935 (1.44253 MB, 87 rounds)
-Stopped timer 30 at 1.19968 (12.3773 MB, 3135 rounds)
-Starting timer 10 at 0 (0 MB, 0 rounds) after 2.652e-06
-Starting timer 101 at 0 (0 MB, 0 rounds) after 1.564e-06
-Stopped timer 101 at 0.0212716 (0.005842 MB, 84 rounds)
-Stopped timer 10 at 0.0617017 (0.019118 MB, 231 rounds)
-Starting timer 20 at 0 (0 MB, 0 rounds) after 3.584e-06
-Starting timer 201 at 0 (0 MB, 0 rounds) after 2.242e-06
-Stopped timer 201 at 0.0212591 (0.005842 MB, 84 rounds)
-Stopped timer 20 at 0.0556583 (0.021324 MB, 197 rounds)
 -----basic testing end, 3 layers, 17 items, time30 phhh0, time10 phhh1, time20 phhh2-----
 -------------------------big layers accuracy testing starts------------------------------------
 the input data is:
 [60000, 12345, 50001, 41011, 71, 71, 71, 0, 50001, 27777, 41011, 41011, 50001, 0, 27777, 41011, 60000]
+Starting timer 10 at 0 (0 MB, 0 rounds) after 9.16e-06
+Starting timer 101 at 0 (0 MB, 0 rounds) after 2.912e-06
+Stopped timer 101 at 0.384592 (8.02823 MB, 388 rounds)
+[0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]; [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1]; [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1]; [1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1]; Stopped timer 10 at 0.761179 (8.13071 MB, 1693 rounds)
+Starting timer 20 at 0 (0 MB, 0 rounds) after 3.138e-06
+Starting timer 201 at 0 (0 MB, 0 rounds) after 1.943e-06
+Stopped timer 201 at 0.0933229 (0.028213 MB, 385 rounds)
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1];[1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1];[1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1];[0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];Stopped timer 20 at 0.208599 (0.062228 MB, 751 rounds)
 -----layers testing end, 16 layers, 17 items-----
 -------------------------no hhh accuracy testing starts------------------------------------
 the input data is:
 [6, 1, 2, 4, 7]
+Starting timer 10 at 0.761179 (8.13071 MB, 1693 rounds) after 0.209189
+Starting timer 101 at 0.384592 (8.02823 MB, 388 rounds) after 0.585785
+Stopped timer 101 at 0.406408 (8.03012 MB, 472 rounds)
+Stopped timer 10 at 0.832417 (8.13685 MB, 1951 rounds)
+Starting timer 20 at 0.208599 (0.062228 MB, 751 rounds) after 0.0718408
+Starting timer 201 at 0.0933229 (0.028213 MB, 385 rounds) after 0.18712
+Stopped timer 201 at 0.113384 (0.030107 MB, 469 rounds)
+Stopped timer 20 at 0.261496 (0.067153 MB, 948 rounds)
 -----no hhh testing end-----
 -------------------------random accuracy testing starts------------------------------------
+Starting timer 10 at 0.832417 (8.13685 MB, 1951 rounds) after 0.0530635
+Starting timer 101 at 0.406408 (8.03012 MB, 472 rounds) after 0.102484
+Stopped timer 101 at 0.762122 (8.0975 MB, 1963 rounds)
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 2]; [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]; [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]; [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]; [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]; Stopped timer 10 at 2.38841 (8.69836 MB, 7742 rounds)
+Starting timer 20 at 0.261496 (0.067153 MB, 948 rounds) after 1.55616
+Starting timer 201 at 0.113384 (0.030107 MB, 469 rounds) after 1.58899
+Stopped timer 201 at 0.472265 (0.097481 MB, 1960 rounds)
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 2];[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];Stopped timer 20 at 1.02827 (0.218999 MB, 3720 rounds)
 -----random testing end-----
 Compiler: ./compile.py -I -R 64 -C phhh2.mpc
-	159077 dabits of replicated Z2^64 left
+	993482 dabits of replicated Z2^64 left
 Significant amount of unused dabits of replicated Z2^64 distorting the benchmark. For more accurate benchmarks, consider reducing the batch size with --batch-size.
-Spent 1.18793 seconds (8.10801 MB, 3557 rounds) on the online phase and 0.13157 seconds (4.31006 MB, 9 rounds) on the preprocessing/offline phase.
+Spent 3.12835 seconds (0.917655 MB, 11461 rounds) on the online phase and 0.290468 seconds (8.00002 MB, 3 rounds) on the preprocessing/offline phase.
 Communication details (rounds in parallel threads counted double):
-Passing around 12.4053 MB in 3224 rounds, taking 1.06125 seconds
-Receiving directly 0.012816 MB in 171 rounds, taking 0.0699271 seconds
-Sending directly 0.012816 MB in 171 rounds, taking 0.0116645 seconds
-CPU time = 0.551523
+Passing around 8.7922 MB in 6694 rounds, taking 2.12883 seconds
+Receiving directly 0.125472 MB in 2385 rounds, taking 0.875822 seconds
+Sending directly 0.125472 MB in 2385 rounds, taking 0.150148 seconds
+CPU time = 1.18454
 The following benchmarks are including preprocessing (offline phase).
-Time = 1.32455 seconds 
-Time10 = 0.0617017 seconds (0.019118 MB, 231 rounds)
-Time20 = 0.0556583 seconds (0.021324 MB, 197 rounds)
-Time30 = 1.19968 seconds (12.3773 MB, 3135 rounds)
-Time101 = 0.0212716 seconds (0.005842 MB, 84 rounds)
-Time201 = 0.0212591 seconds (0.005842 MB, 84 rounds)
-Time301 = 0.0856935 seconds (1.44253 MB, 87 rounds)
-Data sent = 12.4181 MB in ~3566 rounds (party 1 only)
-Global data sent = 37.2542 MB (all parties)
+Time = 3.42393 seconds 
+Time10 = 2.38841 seconds (8.69836 MB, 7742 rounds)
+Time20 = 1.02827 seconds (0.218999 MB, 3720 rounds)
+Time101 = 0.762122 seconds (8.0975 MB, 1963 rounds)
+Time201 = 0.472265 seconds (0.097481 MB, 1960 rounds)
+Data sent = 8.91767 MB in ~11464 rounds (party 1 only)
+Global data sent = 26.753 MB (all parties)
 Actual cost of program:
   Type int
-        179550           Bits
-        200125         daBits
+          6518         daBits
 Command line: ./replicated-ring-party.x -I -p 1 -v phhh2 --batch-size 1000000

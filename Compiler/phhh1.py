@@ -109,6 +109,7 @@ def radix_sort(k0, D0, n_bits=16, get_D=True, signed=True):
 def get_frequency_secure_phhh1(sum_freq, equ):
     # compute the frequency for phhh1; the function is euqal to frequency[j-1] = frequency[j-1] + frequency[j]*equ[i][j-1] for all j, which unable to parallelize
     # sum_freq[i] = freq[i] + freq[i+1] +...+ freq[n]
+    # leak: len(sum_freq), len(equ)
     p = sum_freq.same_shape()
     p.assign(sum_freq)
     t = equ.same_shape()
@@ -152,10 +153,11 @@ def phhh_1(k0,n_bits=16, t=1):
     lenk1 = len(k0) -1 
     start_timer(101)
     sorted_data = radix_sort(k,k,n_bits,signed=False)
+    # sorted_data.print_reveal_nested(end=';')
     stop_timer(101)
     frequency = types.Array.create_from(types.sint(types.regint.inc(size=len(k),base=1,step=0)))#sint array [1,1,1...,1]
     fres_t = types.Matrix(n_bits, len(k), sintbit)  # 1 represent is HHH
-    equ = types.Matrix(n_bits, len(sorted_data), sintbit)  #
+    equ = types.Matrix(n_bits, len(sorted_data), sintbit)  # 1 represent the first item for repeated data
     bs = types.Matrix.create_from(sorted_data.get_vector().bit_decompose(n_bits))  #bit_decompose
     bsh2l = bs.same_shape()
     bsh2l_t = types.Matrix(len(k0),n_bits,sint)
@@ -240,7 +242,7 @@ def phhh_1(k0,n_bits=16, t=1):
 def get_frequency_unsecure_phhh2(sorted_k0):
     # compute frequency, sorted_k0 is the sorted data, n_bits represents the length of data, get_bits represents calculating the frequency of the previous get_bits layers
     # return compacted data and frequency, the number of deduplication data c(cint)
-    # leak:len(sorted_k0), the number of deduplication data
+    # leak:len(sorted_k0), the number of deduplication data c
     # this function is designed for PHHH2
     k = sorted_k0.same_shape()
     k.assign(sorted_k0)
@@ -289,7 +291,12 @@ def get_frequency_unsecure_phhh2(sorted_k0):
 #I think mp-spdz do not support prefix tree
 def phhh_2(k0,n_bits=16, t=1):
     # my second scheme for phhh, this scheme is insecure and more efficient than phhh_1. k0 is the data array, n_bits is the bit length. t is threshold.
-    # leak: bit length n_bits, data number len(k0),the number of deduplication data c, b[s](except the node less than t),which is hhh items
+    # leak: bit length n_bits, data number len(k0),the number of deduplication data c, b[s](except the node less than t), if nodeij>=t, shape of pruned prefixtree, the data corresponding to nodeij
+    para = len(k0)
+    @library.if_(para>80)
+    def _():
+        para =80
+
     start_timer(20)
     k = k0.same_shape()
     k.assign(k0)
@@ -307,8 +314,8 @@ def phhh_2(k0,n_bits=16, t=1):
     tags[0] = cint(1) #1 is boundary point, 0 is useful, 2 is deleted, [1:1/2)
     tags.assign(2, len(k))
     idx = cint.Array(2*len(k)+1)  #Store the data range corresponding to valid nodes, idx [-1] represents the number of nodes * 2
-    idx_p = sint.Array(2*len(k)+80)  #store the frequency for a layer, this is used for parallel
-    idx_t = cint.Array(2*len(k)+80)  #store the relationship with t for a layer, this is used for parallel
+    idx_p = sint.Array(2*len(k)+para)  #store the frequency for a layer, this is used for parallel
+    idx_t = cint.Array(2*len(k)+para)  #store the relationship with t for a layer, this is used for parallel
     idx_div = cint.Array(len(k)+1)  #store the division point
     @library.for_range_parallel(500, len(data) - c)  #delete the duplicated data
     def _(i):
@@ -327,11 +334,13 @@ def phhh_2(k0,n_bits=16, t=1):
     parent.assign_all(-1)
     # stop_timer(203)
 
+    
     #create the prefix tree
     # start_timer(204)
-    @library.for_range(n_bits)  # get the prefix tree with pruning
+    @library.for_range(n_bits)  # get the prefix tree with pruning, n_bits
     def _(i):
-        b_reveal = bsh2l[i].reveal()
+        b_reveal = cint.Array(len(bsh2l[i])+1) #Prevent overflow when searching for boundary points when all rows are 0
+        b_reveal.assign(bsh2l[i].reveal())
         need_left = cint(1)  # 1 true; 0 false
         node_count = cint(0) # the 2*count of the node
         node_count_2 = cint(0) # the count of the node
@@ -356,16 +365,16 @@ def phhh_2(k0,n_bits=16, t=1):
                 node_count_2.update(node_count_2 + 1)
                 need_left.update(0)    
         idx[2*len(k)] = node_count
-      
+        
         idx_p.assign_all(0)
         idx_t.assign_all(0)
         idx_div.assign_all(0)
-        @library.for_range(node_count_2)  #given a node, get the [frequency] information of the children node
+        @library.for_range(node_count_2)  #given a node, get the [frequency] information of the children node, node_count_2
         def _(j):
             left = idx[j*2]  #left edge
             right = idx[j*2+1]
             idx_div[j] = left  # Division point, belonging to the right side
-            @library.while_do(lambda: (b_reveal[idx_div[j]]!=1).bit_and(idx_div[j]<right+1))  #find division point
+            @library.while_do(lambda: (b_reveal[idx_div[j]]!=1).bit_and(idx_div[j]<(right+1)))  #find division point
             def _():
                 idx_div[j] = idx_div[j] + 1
             @library.for_range(idx_div[j] -left)  #get frequency of the children nodes
@@ -375,8 +384,8 @@ def phhh_2(k0,n_bits=16, t=1):
             def _(s):
                 idx_p[j*2+1] = idx_p[j*2+1] + frequency[s+idx_div[j]]
 
-        iter = node_count.max(80)  #para100 iter100 is faster than para100 iter50
-        @library.for_range_parallel(80, iter)  #given a node, get the [if>=t] information of the children node
+        iter = node_count.max(para)  #para100 iter100 is faster than para100 iter50
+        @library.for_range_parallel(para, iter)  #given a node, get the [if>=t] information of the children node
         def _(j): 
             idx_t[j] = idx_p[j].greater_equal(t).reveal()
 
@@ -441,11 +450,15 @@ def phhh_2(k0,n_bits=16, t=1):
                         def _(r):
                             bsh2l[r][s] = 2  #pruning to avoid leaking 
     # stop_timer(204)        
-
+    
     #get HHH items
     # start_timer(205)
+    para = len(k)
+    @library.if_(para>20)
+    def _():
+        para = 20
     hhh = sint.Array(n_bits)
-    idx_3 = cint.Array(len(k)+20)  # store the index of fre_t==3
+    idx_3 = cint.Array(len(k)+para)  # store the index of fre_t==3
     idx3_count = cint(0)
     @library.for_range(n_bits)
     def _(i):
@@ -460,8 +473,8 @@ def phhh_2(k0,n_bits=16, t=1):
                 idx_3[idx3_count] = j
                 idx3_count.update(idx3_count+1)
 
-        iter = idx3_count.max(20)
-        @library.for_range_parallel(20,iter)
+        iter = idx3_count.max(para)
+        @library.for_range_parallel(para,iter)
         def _(j):
             fre_t[idx_3[j]] = fre[idx_3[j]].greater_equal(t).reveal()
 
@@ -575,35 +588,39 @@ def phhh_0(k0,n_bits=16, t=1):
     hdata.assign_all(2)
 
     #get frequency and hdata
-    # start_timer(302)
+   
     @library.for_range(n_bits)  #get frequency and hdata
     def _(i_temp):
         i = n_bits - i_temp -1
+        start_timer(302)
         datas[i], fres[i] = get_frequency_secure_phhh0(sorted_data, n_bits, n_bits - i_temp)  #get_frequency
+        stop_timer(302)
         bs = types.Matrix.create_from(datas[i].get_vector().bit_decompose(n_bits))  #bit_decompose
         @library.for_range(len(k0))
         def _(j):
             @library.for_range(i+1)
             def _(s):
                 hdata[i][j][s] = bs[n_bits - s - 1][j]
-    # stop_timer(302)
+    
     
     #get HHH
-    # start_timer(303)
+    start_timer(303)
     @library.for_range(n_bits)
     def _(i_temp):
         i = n_bits - i_temp -1                    
-        fres_t[i][:] = fres[i][:].greater_equal(t)   
+        fres_t[i][:] = fres[i][:].greater_equal(t)
+        start_timer(304)   
         @library.for_range(len(k))
         def _(j):
             res = Array.create_from(types.cint(types.regint.inc(size=n_bits, base=1)))  #cint Array [1,2,...,n_bits]
             @library.for_range_parallel(n_bits, n_bits)  #substract HHH items; Loop n_bits layers are beneficial for improving efficiency through parallelism without affecting accuracy, as the fres[i:] of additional modifications will not be used
             def _(s):
                 substract_phhh0(fres[s], datas[i][j], datas[s], n_bits, res[s], fres[i][j], fres_t[i][j])
+        stop_timer(304)
         @library.for_range(len(k)) #may parallel
         def _(j):
             hdata[i][j] = fres_t[i][j].if_else(hdata[i][j], sint(2))
-    # stop_timer(303)
+    stop_timer(303)
     
     # hdata.print_reveal_nested(end='\n')  #the true output without leaking
     # @library.for_range_opt(len(hdata))   #the output for observing
