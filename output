@@ -1,17 +1,16 @@
 Default bit length for compilation: 63
 Default security parameter for compilation: 40
 Compiling file Programs/Source/phhh2.mpc
-Compiled 100000 lines at Thu Jul 11 14:33:18 2024
 WARNING: Order of memory instructions not preserved, errors possible
 Writing to Programs/Schedules/phhh2.sch
 Writing to Programs/Bytecode/phhh2-0.bc
-Hash: 62a89e75c40b8e81f1b895922bc74ad9c1d7c186cd4e8068fea8a3b41cd5a2a2
+Hash: a276cb4e6718d9de04fabbb5181b57165e0bd02a9b8a0d4d57bc96316ee35786
 Program requires at most:
          inf integer opens
          inf bit triples
          inf integer dabits
          inf bit inverses
-       37732 integer inputs from player 0
-       37732 integer inputs from player 1
-      434265 integer triples
+        5934 integer inputs from player 0
+        5934 integer inputs from player 1
+       60054 integer triples
          inf virtual machine rounds

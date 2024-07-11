@@ -292,10 +292,9 @@ def get_frequency_unsecure_phhh2(sorted_k0):
 def phhh_2(k0,n_bits=16, t=1):
     # my second scheme for phhh, this scheme is insecure and more efficient than phhh_1. k0 is the data array, n_bits is the bit length. t is threshold.
     # leak: bit length n_bits, data number len(k0),the number of deduplication data c, b[s](except the node less than t), if nodeij>=t, shape of pruned prefixtree, the data corresponding to nodeij
-    para = len(k0)
-    @library.if_(para>80)
-    def _():
-        para =80
+
+    para = 80  # when len(k0)>=80
+    # para = 10 # when len(k0)=10
 
     start_timer(20)
     k = k0.same_shape()
@@ -453,12 +452,9 @@ def phhh_2(k0,n_bits=16, t=1):
     
     #get HHH items
     # start_timer(205)
-    para = len(k)
-    @library.if_(para>20)
-    def _():
-        para = 20
+   
     hhh = sint.Array(n_bits)
-    idx_3 = cint.Array(len(k)+para)  # store the index of fre_t==3
+    idx_3 = cint.Array(len(k)+20)  # store the index of fre_t==3
     idx3_count = cint(0)
     @library.for_range(n_bits)
     def _(i):
@@ -473,8 +469,8 @@ def phhh_2(k0,n_bits=16, t=1):
                 idx_3[idx3_count] = j
                 idx3_count.update(idx3_count+1)
 
-        iter = idx3_count.max(para)
-        @library.for_range_parallel(para,iter)
+        iter = idx3_count.max(20)
+        @library.for_range_parallel(20,iter)
         def _(j):
             fre_t[idx_3[j]] = fre[idx_3[j]].greater_equal(t).reveal()
 

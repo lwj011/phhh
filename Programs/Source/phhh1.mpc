@@ -3,7 +3,7 @@ program.use_trunc_pr = True
 program.use_split(3)
 from Compiler import types,library, instructions
 from Compiler.types import Array, sint, cint
-from Compiler.phhh1 import phhh_1, phhh_2, phhh_0, generate_zipf_distribution, get_frequency_unsecure_phhh2
+from Compiler.phhh1 import phhh_1, phhh_2, phhh_0, generate_zipf_distribution
 from Compiler.GC.types import sbitvec
 from Compiler.instructions import time, crash
 from  Compiler.sorting import radix_sort
