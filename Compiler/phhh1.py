@@ -147,20 +147,28 @@ def phhh_1(k0,n_bits=16, t=1):
 
     #Define variables
     start_timer(10)
+    start_timer(101)
     k = k0.same_shape()
     k.assign(k0)
     lenk = len(k0)
     lenk1 = len(k0) -1 
-    start_timer(101)
+    start_timer(104)
     sorted_data = radix_sort(k,k,n_bits,signed=False)
+    stop_timer(104)
     # sorted_data.print_reveal_nested(end=';')
     stop_timer(101)
+
+
+    start_timer(102)
     frequency = types.Array.create_from(types.sint(types.regint.inc(size=len(k),base=1,step=0)))#sint array [1,1,1...,1]
     fres_t = types.Matrix(n_bits, len(k), sintbit)  # 1 represent is HHH
     equ = types.Matrix(n_bits, len(sorted_data), sintbit)  # 1 represent the first item for repeated data
+    # start_timer(108)
     bs = types.Matrix.create_from(sorted_data.get_vector().bit_decompose(n_bits))  #bit_decompose
+    # stop_timer(108)
     bsh2l = bs.same_shape()
     bsh2l_t = types.Matrix(len(k0),n_bits,sint)
+    # start_timer(107)
     @library.for_range(len(bs))
     def _(i):
         bsh2l[i] = bs[n_bits-1-i]
@@ -169,9 +177,10 @@ def phhh_1(k0,n_bits=16, t=1):
         @library.for_range(len(bsh2l[i]))
         def _(j):
             bsh2l_t[j][i] = bsh2l[i][j]
+    # stop_timer(107)
 
     #get equal
-    # start_timer(102)
+    start_timer(105)
     b = bsh2l[0] 
     equ[0][0] = 1
     equ[0][1:] = b[:lenk1]^b[1:]
@@ -180,10 +189,12 @@ def phhh_1(k0,n_bits=16, t=1):
         b = bsh2l[i+1]
         equ[i+1][0] = 1
         equ[i+1][1:] = (b[:lenk1]^b[1:])|equ[i][1:]
-    # stop_timer(102)
+    stop_timer(105)
+    stop_timer(102)
     
     # get frequency
-    # start_timer(103)
+    start_timer(103)
+    start_timer(106)
     @library.for_range(n_bits)
     def _(i1):
         i = n_bits-i1-1    
@@ -195,10 +206,10 @@ def phhh_1(k0,n_bits=16, t=1):
         frequency.assign(frequency_temp)
         fres_t[i][:] = frequency[:].greater_equal(t)
         frequency[:] = frequency[:]*(1-fres_t[i][:])
-    # stop_timer(103)
+    
 
     # get HHH
-    # start_timer(104)
+    
     hdata_2 = bsh2l_t.same_shape() # due to memory limitations, I only generate and do not store. 2 represents the end of the data; it uses bhstl_t and fres_t to generate hdata
     hdata_2.assign(bsh2l_t)
     temp_null = hdata_2[0].same_shape()
@@ -227,7 +238,9 @@ def phhh_1(k0,n_bits=16, t=1):
         # def _():
         #     hdata[j].print_reveal_nested(end='; ')
         # hdata[j].print_reveal_nested(end='; ')  #the true ouput without leaking
-    # stop_timer(104)
+    stop_timer(106)
+    stop_timer(103)
+    
     stop_timer(10)
 
 
@@ -292,22 +305,27 @@ def get_frequency_unsecure_phhh2(sorted_k0):
 def phhh_2(k0,n_bits=16, t=1):
     # my second scheme for phhh, this scheme is insecure and more efficient than phhh_1. k0 is the data array, n_bits is the bit length. t is threshold.
     # leak: bit length n_bits, data number len(k0),the number of deduplication data c, b[s](except the node less than t), if nodeij>=t, shape of pruned prefixtree, the data corresponding to nodeij
+    
+    start_timer(20)
 
+    start_timer(201)
     para = 80  # when len(k0)>=80
     # para = 10 # when len(k0)=10
-
-    start_timer(20)
+    
     k = k0.same_shape()
     k.assign(k0)
-    start_timer(201)
+    start_timer(205)
     sorted_data = radix_sort(k,k,n_bits,signed=False) #sort
+    stop_timer(205)
     stop_timer(201)
-    # start_timer(202)
+    start_timer(202)
+    start_timer(206)
     data, frequency, c = get_frequency_unsecure_phhh2(sorted_data)  #get frequency of data, c is the number of duplicated data
-    # stop_timer(202)
+    stop_timer(206)
+    stop_timer(202)
 
     # define variables
-    # start_timer(203)
+    start_timer(203)
     tags = cint.Array(len(k)+1)  #1 is boundary point, 0 is useful, 2 is deleted
     tags.assign_all(0)
     tags[0] = cint(1) #1 is boundary point, 0 is useful, 2 is deleted, [1:1/2)
@@ -331,11 +349,11 @@ def phhh_2(k0,n_bits=16, t=1):
     fres_t.assign_all(2)
     parent = types.Matrix(n_bits, len(k), cint) # restore the index of parent node, -1 represent null
     parent.assign_all(-1)
-    # stop_timer(203)
+    
 
     
     #create the prefix tree
-    # start_timer(204)
+    start_timer(207)
     @library.for_range(n_bits)  # get the prefix tree with pruning, n_bits
     def _(i):
         b_reveal = cint.Array(len(bsh2l[i])+1) #Prevent overflow when searching for boundary points when all rows are 0
@@ -448,11 +466,12 @@ def phhh_2(k0,n_bits=16, t=1):
                         @library.for_range(start=i+1,stop=n_bits)
                         def _(r):
                             bsh2l[r][s] = 2  #pruning to avoid leaking 
-    # stop_timer(204)        
+    stop_timer(207)
+    stop_timer(203)        
     
     #get HHH items
-    # start_timer(205)
-   
+    start_timer(204)
+    start_timer(208)
     hhh = sint.Array(n_bits)
     idx_3 = cint.Array(len(k)+20)  # store the index of fre_t==3
     idx3_count = cint(0)
@@ -492,7 +511,8 @@ def phhh_2(k0,n_bits=16, t=1):
                     temp_j.update(parent[temp_i+1][temp_j])
                     fres[temp_i][temp_j] = fres[temp_i][temp_j] - fre[j]
                     fres_t[temp_i][temp_j] = 3
-    # stop_timer(205)
+    stop_timer(208)
+    stop_timer(204)
     
     stop_timer(20)
 
@@ -634,7 +654,7 @@ def phhh_0(k0,n_bits=16, t=1):
 
 
 
-
+# The following content is the algorithm designed for the experiment
 
 def generate_zipf_distribution(n_bits, num, zipf_exponent=1.03):
     zipf_data = np.random.zipf(zipf_exponent, size=num)
@@ -644,6 +664,115 @@ def generate_zipf_distribution(n_bits, num, zipf_exponent=1.03):
    
 
 
+
+# get_frequency_secure_phhh1(sum_freq, equ):
+
+def test_phhh1_frequency(k0, n_bits):
+    """
+    Test the cost of the frequency algorithm used in Phhh1 scheme
+    """
+    start_timer(60)
+    start_timer(61)
+    #sort
+    k = k0.same_shape()
+    k.assign(k0)
+    sorted_data = radix_sort(k,k,n_bits,signed=False) #sort
+    stop_timer(61)
+
+    start_timer(64)
+    start_timer(62)
+    # get equal
+    equ = sintbit.Array(len(sorted_data))
+    equ.assign_all(0)
+    equ[0] = sintbit(1)
+    @library.for_range_parallel(500, len(sorted_data)-1)
+    def _(i):
+        equ[i+1] = (sorted_data[i+1].equal(sorted_data[i]))^1
+    stop_timer(62)
+
+    start_timer(63)
+    #get frequency
+    frequency = types.Array.create_from(types.sint(types.regint.inc(size=len(sorted_data),base=1,step=0)))#sint array [1,1,1...,1]
+    @library.for_range(len(sorted_data)-1)
+    def _(j1):
+        j = len(sorted_data) -j1 -1
+        frequency[j-1] = frequency[j-1] + frequency[j]
+    frequency_temp = get_frequency_secure_phhh1(frequency, equ)
+    stop_timer(63)
+    stop_timer(64)
+
+
+    # frequency_temp.print_reveal_nested(end='\n')
+    stop_timer(60)
+
+    
+    
+
+def test_phhh0_frequency(k0, n_bits):
+    """
+    Test the cost of the frequency algorithm used in Phhh0 scheme
+    """
+    start_timer(50)
+
+    # k0.print_reveal_nested(end='\n')
+
+    
+    start_timer(51)
+    #sort
+    k = k0.same_shape()
+    k.assign(k0)
+    sorted_data = radix_sort(k,k,n_bits,signed=False) #sort
+    stop_timer(51)
+
+    start_timer(54)
+    start_timer(52)
+    # get equal
+    equ = sintbit.Array(len(sorted_data))
+    equ.assign_all(0)
+    equ[0] = sintbit(1)
+    @library.for_range_parallel(500, len(sorted_data)-1)
+    def _(i):
+        equ[i+1] = (sorted_data[i+1].equal(sorted_data[i]))^1
+    stop_timer(52)
+
+    start_timer(53)
+    #compact
+    indices = types.Array.create_from(types.sint(types.regint.inc(len(sorted_data))))  #sint Array [0,1,2,...,len(k)-1]
+    p = indices
+    t = equ
+    c0 = p.same_shape()
+    c1 = p.same_shape()
+    label = p.same_shape()
+    c1[0] = t[0]
+    c0[0] = 1 - c1[0]
+    @library.for_range_opt(len(t)-1)
+    def _(i):
+        c1[i+1] = c1[i] + t[i+1]
+        c0[i+1] = i+2 - c1[i+1]
+    label[:] = c1[:]*t[:] + (c0[:]+c1[len(t)-1])*(1-t[:]) - 1
+    apply_perm(label,sorted_data)
+    apply_perm(label,t)
+    apply_perm(label,p)
+
+    #get_frequency
+    frequency = p.same_shape()
+    frequency.assign_all(0)
+    end = len(p)-1
+    frequency[:end] = (t[:end]&t[1:]) * (p[1:] - p[:end]) + (t[:end]^t[1:]) * (len(sorted_data) - p[:end]) 
+    frequency[end] = t[end]
+    stop_timer(53)
+    stop_timer(54)
+
+
+    # sorted_data.print_reveal_nested(end='\n')
+    # frequency.print_reveal_nested(end='\n')
+    stop_timer(50)
+
+    
+
+
+    
+    
 
 
 
