@@ -9,6 +9,8 @@ from Compiler.circuit import sha3_256
 from Compiler.GC.types import sbitvec, sbits
 from Compiler.instructions import time,crash
 import numpy as np
+import csv
+import random
 
 
 def gen_bit_perm(b):
@@ -225,18 +227,18 @@ def phhh_1(k0,n_bits=16, t=1):
         @library.for_range_parallel(1000, len(k0))
         def _(j):
             hdata[j][:] = hdata[j][:] * fres_t[i-1][j] +2*(1 - fres_t[i-1][j])
-            # @library.if_(hdata[j][0].reveal()!=2)  #the output for observing
-            # def _():
-            #     hdata[j].print_reveal_nested(end='; ')
+            @library.if_(hdata[j][0].reveal()!=2)  #the output for observing
+            def _():
+                hdata[j].print_reveal_nested(end=',')
             # hdata[j].print_reveal_nested(end='; ')  #the true ouput without leaking
     hdata = bsh2l_t.same_shape() #for the lowest layer
     hdata.assign(bsh2l_t)  
     @library.for_range_parallel(1000, len(k0))
     def _(j):
         hdata[j][:] = hdata[j][:] * fres_t[n_bits-1][j] +2*(1 - fres_t[n_bits-1][j])
-        # @library.if_(hdata[j][0].reveal()!=2)  #the output for observing
-        # def _():
-        #     hdata[j].print_reveal_nested(end='; ')
+        @library.if_(hdata[j][0].reveal()!=2)  #the output for observing
+        def _():
+            hdata[j].print_reveal_nested(end=',')
         # hdata[j].print_reveal_nested(end='; ')  #the true ouput without leaking
     stop_timer(106)
     stop_timer(103)
@@ -309,8 +311,9 @@ def phhh_2(k0,n_bits=16, t=1):
     start_timer(20)
 
     start_timer(201)
-    para = 80  # when len(k0)>=80
-    # para = 10 # when len(k0)=10
+    para_node = 80  #parallel parameter
+    para_idx3 = 20
+    
     
     k = k0.same_shape()
     k.assign(k0)
@@ -331,8 +334,8 @@ def phhh_2(k0,n_bits=16, t=1):
     tags[0] = cint(1) #1 is boundary point, 0 is useful, 2 is deleted, [1:1/2)
     tags.assign(2, len(k))
     idx = cint.Array(2*len(k)+1)  #Store the data range corresponding to valid nodes, idx [-1] represents the number of nodes * 2
-    idx_p = sint.Array(2*len(k)+para)  #store the frequency for a layer, this is used for parallel
-    idx_t = cint.Array(2*len(k)+para)  #store the relationship with t for a layer, this is used for parallel
+    idx_p = sint.Array(2*len(k)+para_node)  #store the frequency for a layer, this is used for parallel
+    idx_t = cint.Array(2*len(k)+para_node)  #store the relationship with t for a layer, this is used for parallel
     idx_div = cint.Array(len(k)+1)  #store the division point
     @library.for_range_parallel(500, len(data) - c)  #delete the duplicated data
     def _(i):
@@ -401,10 +404,13 @@ def phhh_2(k0,n_bits=16, t=1):
             def _(s):
                 idx_p[j*2+1] = idx_p[j*2+1] + frequency[s+idx_div[j]]
 
-        iter = node_count.max(para)  #para100 iter100 is faster than para100 iter50
-        @library.for_range_parallel(para, iter)  #given a node, get the [if>=t] information of the children node
+        iter = node_count.max(para_node)  #para100 iter100 is faster than para100 iter50
+        # node_count.print_reg_plain()
+        @library.for_range_parallel(para_node, iter)  #given a node, get the [if>=t] information of the children node
         def _(j): 
             idx_t[j] = idx_p[j].greater_equal(t).reveal()
+        
+
 
         @library.for_range(node_count_2)  #given a node, get the [pruning] information of the children node
         def _(j): 
@@ -473,7 +479,7 @@ def phhh_2(k0,n_bits=16, t=1):
     start_timer(204)
     start_timer(208)
     hhh = sint.Array(n_bits)
-    idx_3 = cint.Array(len(k)+20)  # store the index of fre_t==3
+    idx_3 = cint.Array(len(k)+para_idx3)  # store the index of fre_t==3
     idx3_count = cint(0)
     @library.for_range(n_bits)
     def _(i):
@@ -488,8 +494,9 @@ def phhh_2(k0,n_bits=16, t=1):
                 idx_3[idx3_count] = j
                 idx3_count.update(idx3_count+1)
 
-        iter = idx3_count.max(20)
-        @library.for_range_parallel(20,iter)
+        iter = idx3_count.max(para_idx3)
+        # idx3_count.print_reg_plain()
+        @library.for_range_parallel(para_idx3,iter)
         def _(j):
             fre_t[idx_3[j]] = fre[idx_3[j]].greater_equal(t).reveal()
 
@@ -501,7 +508,7 @@ def phhh_2(k0,n_bits=16, t=1):
                 @library.for_range(n_bits - i)
                 def _(s): 
                     hhh[s] = bsh2l[s][j]
-                # hhh.print_reveal_nested(end=';')  #the output for obversing& the true output, leaking the hhh value, which is hhh items
+                hhh.print_reveal_nested(end=',')  #the output for obversing& the true output, leaking the hhh value, which is hhh items
                 temp_i = cint(0)
                 temp_j = cint(0)
                 temp_j.update(j)
@@ -651,17 +658,106 @@ def phhh_0(k0,n_bits=16, t=1):
 
 
 
+def test_client_random(n_bits, num):
+    start_timer(60)
+    data = []
+    for _ in range(num):
+        # 生成一个随机数
+        random_number = random.getrandbits(n_bits)
+        data.append(random_number)
+    a = sint.Array(num)
+    a.assign(data)
+    stop_timer(60)
+
+def test_client_random16(num):
+    n_bits=16
+    start_timer(616)
+    data = []
+    for _ in range(num):
+        # 生成一个随机数
+        random_number = random.getrandbits(n_bits)
+        data.append(random_number)
+    a = sint.Array(num)
+    a.assign(data)
+    stop_timer(616)
+
+def test_client_random32(num):
+    n_bits=32
+    start_timer(632)
+    data = []
+    for _ in range(num):
+        # 生成一个随机数
+        random_number = random.getrandbits(n_bits)
+        data.append(random_number)
+    a = sint.Array(num)
+    a.assign(data)
+    stop_timer(632)
+
+def test_client_random48(num):
+    n_bits = 48
+    start_timer(648)
+    data = []
+    for _ in range(num):
+        # 生成一个随机数
+        random_number = random.getrandbits(n_bits)
+        data.append(random_number)
+    a = sint.Array(num)
+    a.assign(data)
+    stop_timer(648)
+
+def test_client_random64(num):
+    n_bits=64
+    start_timer(664)
+    data = []
+    for _ in range(num):
+        # 生成一个随机数
+        random_number = random.getrandbits(n_bits)
+        data.append(random_number)
+    a = sint.Array(num)
+    a.assign(data)
+    stop_timer(664)
+
+
 
 
 
 # The following content is the algorithm designed for the experiment
 
 def generate_zipf_distribution(n_bits, num, zipf_exponent=1.03):
-    zipf_data = np.random.zipf(zipf_exponent, size=num)
     max_value = 2**n_bits - 1
-    zipf_data = np.clip(zipf_data, 1, max_value)
-    return list(map(int, zipf_data.astype(np.uint64)))
+    sampled_points = []
+    while len(sampled_points) < num:
+        samples = np.random.zipf(zipf_exponent, size=num)
+        samples = samples[samples <= max_value]
+        sampled_points = np.concatenate((sampled_points, samples))
+    sampled_points = sampled_points[:num]
+    return list(map(int, sampled_points.astype(np.uint64)))
    
+
+
+def generate_normal_distribution(n_bits, num, var=5):
+    max_value = 2**n_bits - 1
+    normal_data = np.random.normal(loc=max_value/2, scale=np.sqrt(var), size=num)
+    normal_data = np.clip(normal_data, 0, max_value)
+    return list(map(int, normal_data.astype(np.uint64)))
+
+
+
+def generate_widemawi_distribution(n_bits, num):
+    #n_bits=[16,32,48,64], num<=400k
+    csv_file_path = './Compiler/wide_dataset/ip'+str(n_bits)+'_400k.csv'
+    data_list = []
+    count = 0
+    with open(csv_file_path, mode='r', encoding='utf-8') as file:
+        csv_reader = csv.reader(file)
+        for row in csv_reader:
+            if count >= num:
+                break
+            data_list.append(int(row[0]))
+            count += 1
+
+    return data_list
+
 
 
 

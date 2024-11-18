@@ -3,7 +3,7 @@ program.use_trunc_pr = True
 program.use_split(3)
 from Compiler import types,library, instructions
 from Compiler.types import Array, sint, cint
-from Compiler.phhh1 import radix_sort, phhh_1, phhh_2, phhh_0, generate_zipf_distribution
+from Compiler.phhh1 import radix_sort, phhh_1, phhh_2, phhh_0, generate_zipf_distribution, generate_normal_distribution, generate_widemawi_distribution
 from Compiler.GC.types import sbitvec
 from Compiler.instructions import time, crash
 #from  Compiler.sorting import radix_sort
@@ -12,6 +12,17 @@ from Compiler.instructions import time, crash
 
 
 
+num=10
+n_bits=8
+t = sint(2)
+data = generate_zipf_distribution(n_bits, num, 1.03)
+a = sint.Array(num)
+a.assign(data)
+phhh_1(a,n_bits,t)
+phhh_2(a, n_bits, t)
+print_ln('----pruning test----')
+
+"""
 print_ln('-------------------------basic accuracy testing starts------------------------------------')
 #t is 3
 a = sint.Array(17)
@@ -71,3 +82,40 @@ a.assign(zipf_data)
 #phhh_1(a,n_bits,t)
 #phhh_2(a,n_bits, t)
 print_ln('-----random testing end-----')
+
+
+
+
+print_ln('-------------------------normal distribution testing starts------------------------------------')
+n_bits = 64
+num = 1000
+normal_data = generate_normal_distribution(n_bits, num, var=121)
+a = sint.Array(num)
+a.assign(normal_data)
+a.print_reveal_nested(end=';')
+print_ln('-----normal distribution testing end-----')
+
+
+
+print_ln('-------------------------zipf distribution testing starts------------------------------------')
+n_bits = 64
+num = 6
+zipf_data = generate_zipf_distribution(n_bits, num, 1.03)
+a = sint.Array(num)
+a.assign(zipf_data)
+a.print_reveal_nested(end=';')
+print_ln('-----zipf distribution testing end-----')
+
+
+
+
+
+print_ln('-------------------------widemawi distribution testing starts------------------------------------')
+n_bits = 64
+num = 11
+mawi_data = generate_widemawi_distribution(n_bits, num)
+a = sint.Array(num)
+a.assign(mawi_data)
+a.print_reveal_nested(end=';')
+print_ln('-----mawi distribution testing end-----')
+"""

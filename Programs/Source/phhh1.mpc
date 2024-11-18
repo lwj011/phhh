@@ -3,7 +3,7 @@ program.use_trunc_pr = True
 program.use_split(3)
 from Compiler import types,library, instructions
 from Compiler.types import Array, sint, cint
-from Compiler.phhh1 import phhh_1, phhh_2, phhh_0, generate_zipf_distribution, test_phhh1_frequency, test_phhh0_frequency
+from Compiler.phhh1 import phhh_1, phhh_2, phhh_0, generate_zipf_distribution, generate_widemawi_distribution, test_client_random,test_client_random16,test_client_random32,test_client_random48,test_client_random64
 from Compiler.GC.types import sbitvec
 from Compiler.instructions import time, crash
 from  Compiler.sorting import radix_sort
@@ -13,23 +13,41 @@ from  Compiler.sorting import radix_sort
 
 
 n_bits = 64   #layers
-num = 100000      #data number
-t = sint(10)   #threshold
+num = 100000     #data number
+t = sint(400)   #threshold
 
-zipf_data = generate_zipf_distribution(n_bits, num, 1.03)
+test_client_random(8, num)
+test_client_random16(num)
+test_client_random32(num)
+test_client_random48(num)
+test_client_random64(num)
+
+
+
+
+
+"""
+data = generate_zipf_distribution(n_bits, num, 1.03)
 a = sint.Array(num)
-a.assign(zipf_data)
+a.assign(data)
 #phhh_0(a,n_bits,t)
 #phhh_1(a,n_bits,t)
 phhh_2(a, n_bits, t)
 #test_phhh0_frequency(a, n_bits)
 #test_phhh1_frequency(a, n_bits)
-print_ln('----- testing end -----')
+print_ln('----- zipf testing end -----')
 
 
 
 
-
-
-
+data = generate_widemawi_distribution(n_bits, num)
+a = sint.Array(num)
+a.assign(data)
+phhh_0(a,n_bits,t)
+#phhh_1(a,n_bits,t)
+#phhh_2(a, n_bits, t)
+#test_phhh0_frequency(a, n_bits)
+#test_phhh1_frequency(a, n_bits)
+print_ln('----- mawi testing end -----')
+"""
 

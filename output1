@@ -1,46 +1,27 @@
 Using security parameter 40
 Trying to run 64-bit computation
-Starting timer 20 at 0 (0 MB, 0 rounds) after 1.1786e-05
-Starting timer 201 at 0 (0 MB, 0 rounds) after 3.363e-06
-Starting timer 205 at 0 (0 MB, 0 rounds) after 6.97e-06
-Stopped timer 205 at 25.8189 (680.792 MB, 1512 rounds)
-Stopped timer 201 at 25.8196 (680.792 MB, 1512 rounds)
-Starting timer 202 at 0 (0 MB, 0 rounds) after 2.974e-06
-Starting timer 206 at 0 (0 MB, 0 rounds) after 2.183e-06
-Stopped timer 206 at 1.83576 (18.0103 MB, 3435 rounds)
-Stopped timer 202 at 1.83584 (18.0103 MB, 3435 rounds)
-Starting timer 203 at 0 (0 MB, 0 rounds) after 2.518e-06
-Starting timer 207 at 0 (0 MB, 0 rounds) after 1.1334e-05
-Stopped timer 207 at 21.6418 (52.2186 MB, 21466 rounds)
-Stopped timer 203 at 23.5947 (106.606 MB, 21492 rounds)
-Starting timer 204 at 0 (0 MB, 0 rounds) after 2.842e-06
-Starting timer 208 at 0 (0 MB, 0 rounds) after 1.865e-06
-Stopped timer 208 at 7.95738 (0.349745 MB, 8055 rounds)
-Stopped timer 204 at 7.95742 (0.349745 MB, 8055 rounds)
-Stopped timer 20 at 59.2077 (805.758 MB, 34494 rounds)
------ testing end -----
+Starting timer 60 at 0 (0 MB, 0 rounds) after 1.5737e-05
+Stopped timer 60 at 0.00298101 (0 MB, 0 rounds)
+Starting timer 616 at 0 (0 MB, 0 rounds) after 2.03e-06
+Stopped timer 616 at 0.00293252 (0 MB, 0 rounds)
+Starting timer 632 at 0 (0 MB, 0 rounds) after 2.195e-06
+Stopped timer 632 at 0.00578872 (0 MB, 0 rounds)
+Starting timer 648 at 0 (0 MB, 0 rounds) after 2.393e-06
+Stopped timer 648 at 0.00762141 (0 MB, 0 rounds)
+Starting timer 664 at 0 (0 MB, 0 rounds) after 2.239e-06
+Stopped timer 664 at 0.0101916 (0 MB, 0 rounds)
 Compiler: ./compile.py -I -R 64 -C phhh1.mpc
-	66308 dabits of replicated Z2^64 left
-9 threads spent a total of 57.0098 seconds (701.758 MB, 34455 rounds) on the online phase, 2.77408 seconds (104 MB, 39 rounds) on the preprocessing/offline phase, and 474.403 seconds idling.
+Spent 0.0298014 seconds on the online phase and 5.134e-06 seconds on the preprocessing/offline phase.
 Communication details (rounds in parallel threads counted double):
-Passing around 594.554 MB in 33412 rounds, taking 16.8755 seconds
-Receiving directly 211.204 MB in 541 rounds, taking 3.97816 seconds
-Sending directly 211.204 MB in 541 rounds, taking 0.621001 seconds
-CPU time = 45.1282 (overall core time)
+CPU time = 0.0299885
 The following benchmarks are including preprocessing (offline phase).
-Time = 59.2458 seconds 
-Time20 = 59.2077 seconds (805.758 MB, 34494 rounds)
-Time201 = 25.8196 seconds (680.792 MB, 1512 rounds)
-Time202 = 1.83584 seconds (18.0103 MB, 3435 rounds)
-Time203 = 23.5947 seconds (106.606 MB, 21492 rounds)
-Time204 = 7.95742 seconds (0.349745 MB, 8055 rounds)
-Time205 = 25.8189 seconds (680.792 MB, 1512 rounds)
-Time206 = 1.83576 seconds (18.0103 MB, 3435 rounds)
-Time207 = 21.6418 seconds (52.2186 MB, 21466 rounds)
-Time208 = 7.95738 seconds (0.349745 MB, 8055 rounds)
-Data sent = 805.758 MB in ~34494 rounds (party 1 only)
-Global data sent = 2417.28 MB (all parties)
+Time = 0.0306408 seconds 
+Time60 = 0.00298101 seconds (0 MB, 0 rounds)
+Time616 = 0.00293252 seconds (0 MB, 0 rounds)
+Time632 = 0.00578872 seconds (0 MB, 0 rounds)
+Time648 = 0.00762141 seconds (0 MB, 0 rounds)
+Time664 = 0.0101916 seconds (0 MB, 0 rounds)
+Data sent = 0 MB in ~0 rounds (party 1 only)
+Global data sent = 0 MB (all parties)
 Actual cost of program:
-  Type int
-      12933692         daBits
 Command line: ./replicated-ring-party.x -I -p 1 -v phhh1 --batch-size 1000000

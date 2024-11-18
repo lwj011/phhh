@@ -1,19 +1,10 @@
-Starting timer 20 at 0 (0 MB, 0 rounds) after 8.334e-06
-Starting timer 201 at 0 (0 MB, 0 rounds) after 2.792e-06
-Starting timer 205 at 0 (0 MB, 0 rounds) after 3.938e-06
-Stopped timer 205 at 25.8161 (680.792 MB, 1519 rounds)
-Stopped timer 201 at 25.8167 (680.792 MB, 1519 rounds)
-Starting timer 202 at 0 (0 MB, 0 rounds) after 2.554e-06
-Starting timer 206 at 0 (0 MB, 0 rounds) after 1.641e-06
-Stopped timer 206 at 1.84111 (18.0103 MB, 3435 rounds)
-Stopped timer 202 at 1.84118 (18.0103 MB, 3435 rounds)
-Starting timer 203 at 0 (0 MB, 0 rounds) after 2.274e-06
-Starting timer 207 at 0 (0 MB, 0 rounds) after 1.3129e-05
-Stopped timer 207 at 21.717 (52.2186 MB, 21466 rounds)
-Stopped timer 203 at 23.5937 (106.606 MB, 21498 rounds)
-Starting timer 204 at 0 (0 MB, 0 rounds) after 2.496e-06
-Starting timer 208 at 0 (0 MB, 0 rounds) after 1.764e-06
-Stopped timer 208 at 7.95744 (0.349745 MB, 8055 rounds)
-Stopped timer 204 at 7.9575 (0.349745 MB, 8055 rounds)
-Stopped timer 20 at 59.2092 (805.758 MB, 34507 rounds)
------ testing end -----
+Starting timer 60 at 0 (0 MB, 0 rounds) after 1.1928e-05
+Stopped timer 60 at 0.00396748 (0 MB, 0 rounds)
+Starting timer 616 at 0 (0 MB, 0 rounds) after 3.779e-06
+Stopped timer 616 at 0.00256411 (0 MB, 0 rounds)
+Starting timer 632 at 0 (0 MB, 0 rounds) after 1.497e-06
+Stopped timer 632 at 0.0047708 (0 MB, 0 rounds)
+Starting timer 648 at 0 (0 MB, 0 rounds) after 1.439e-06
+Stopped timer 648 at 0.00597518 (0 MB, 0 rounds)
+Starting timer 664 at 0 (0 MB, 0 rounds) after 1.41e-06
+Stopped timer 664 at 0.0073932 (0 MB, 0 rounds)
